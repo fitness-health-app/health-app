@@ -10,6 +10,7 @@ import React from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
 
 import HomePage from './components/HomePage';
+import Login from './components/Login';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,6 +28,7 @@ const App = () => {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       {/* <HomePage /> */}
+      <Login />
     </View>
   );
 };
