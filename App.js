@@ -9,12 +9,12 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
-
-import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+
+import LoginDrawerNavigator from './navigation/LoginDrawerNavigation';
 
 import HomePage from './screens/HomePage';
 import Login from './screens/Login';
@@ -29,20 +29,6 @@ import Tasks from './screens/Tasks';
 import Logout from './screens/Logout';
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-
-const LoginDrawerNavigator = () => {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Dashboard" component={Dashboard} />
-      <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="MyProfile" component={MyProfile} />
-      <Drawer.Screen name="Tasks" component={Tasks} />
-      <Drawer.Screen name="Statistics" component={Statistics} />
-      <Drawer.Screen name="Logout" component={Logout} />
-    </Drawer.Navigator>
-  );
-};
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
