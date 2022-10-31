@@ -39,6 +39,10 @@ const HomePage = ({navigation}) => {
     navigation.navigate('About');
   };
 
+  const onPressHandlerContactUs = () => {
+    navigation.navigate('ContactUs');
+  };
+
   return (
     <View style={[styles.viewBody, backgroundStyle]}>
       <View style={styles.viewLoginRow}>
@@ -55,13 +59,12 @@ const HomePage = ({navigation}) => {
       <View style={[styles.containerIntro, containerBackgroundStyle]}>
         <View style={styles.viewTextTitle}>
           <Text style={[styles.textTitle, containerTextColor]}>
-            Start Your Daily Workout Now!
+            Start Tracking Now!
           </Text>
         </View>
         <View style={styles.viewTextDescription}>
           <Text style={[styles.textDescription, containerBackgroundStyle]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sapien,
-            elit mauris, leo in
+            Track the foods and workout and lose weight
           </Text>
         </View>
       </View>
@@ -76,7 +79,7 @@ const HomePage = ({navigation}) => {
           </TouchableHighlight>
           <TouchableHighlight
             activeOpacity={0.6}
-            onPress={() => alert('Contact Us Pressed')}>
+            onPress={onPressHandlerContactUs}>
             <View style={[styles.viewTouchable, buttonBackgroundColor]}>
               <Text style={[styles.textTouchable, containerTextColor]}>
                 Contact Us

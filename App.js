@@ -20,6 +20,7 @@ import HomePage from './screens/HomePage';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import About from './screens/About';
+import ContactUs from './screens/ContactUs';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,7 @@ const App = () => {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="ContactUs" component={ContactUs} />
           <Stack.Screen
             name="LoginDrawerNavigator"
             component={LoginDrawerNavigator}

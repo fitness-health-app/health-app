@@ -45,18 +45,15 @@ const About = ({navigation}) => {
               textColorStyle,
               {fontSize: 20, fontWeight: 'regular', textAlign: 'justify'},
             ]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Lacus
-            suspendisse faucibus interdum posuere lorem ipsum dolor sit amet.
-            Arcu cursus euismod quis viverra nibh cras pulvinar mattis.
-            Ullamcorper sit amet risus nullam eget felis. Cursus turpis massa
-            tincidunt dui ut ornare. Metus aliquam eleifend mi in nulla.{'\n\n'}
-            Tortor aliquam nulla facilisi cras fermentum odio. Urna condimentum
-            mattis pellentesque id nibh tortor id. Aliquam etiam erat velit
-            scelerisque in dictum. Et odio pellentesque diam volutpat commodo
-            sed. Fusce ut placerat orci nulla pellentesque dignissim enim sit
-            amet. Odio facilisis mauris sit amet massa.
+            A digital health and wellness application with services such as
+            calorie tracking and advice on nutrition and fitness. It is
+            available on the Android and iOS platforms, and can be used with
+            wearable technology such as activity trackers.
+            {'\n\n'}
+            Tell us what you want to acheive and receive personalized goals.
+            Learn about the foods you’re eating and keep your calories within
+            your daily budget. Reach your goals and continue to set new ones for
+            a happier, healthier you!
           </Text>
         </View>
       </View>
