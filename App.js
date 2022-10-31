@@ -21,13 +21,6 @@ import Login from './screens/Login';
 import Signup from './screens/Signup';
 import About from './screens/About';
 
-import Dashboard from './screens/Dashboard';
-import MyProfile from './screens/MyProfile';
-import Settings from './screens/Settings';
-import Statistics from './screens/Statistics';
-import Tasks from './screens/Tasks';
-import Logout from './screens/Logout';
-
 const Stack = createStackNavigator();
 
 const App = () => {

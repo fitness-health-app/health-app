@@ -1,5 +1,12 @@
 import React from 'react';
-import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {
+  StatusBar,
+  useColorScheme,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+} from 'react-native';
 
 const Dashboard = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,9 +32,10 @@ const Dashboard = ({navigation}) => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Text style={[textColorStyle, {fontSize: 20, fontWeight: 'bold'}]}>
-          Dashboard page is under construction.
-        </Text>
+        <Image
+          source={require('../assests/Dashboard.png')}
+          style={{width: 380, height: 600}}
+        />
       </View>
     </View>
   );
