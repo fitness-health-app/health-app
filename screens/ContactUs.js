@@ -61,7 +61,7 @@ const ContactUs = ({navigation}) => {
           placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
         />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, {height: 200}]}
           onChangeText={setMessage}
           value={message}
           placeholder="Your Messsage"
