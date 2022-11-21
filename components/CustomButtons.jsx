@@ -12,11 +12,11 @@ const CustomButtons = ({buttonText, onPressHandleFunction}) => {
 
   const buttonBackgroundColor = {
     backgroundColor: isDarkMode
-      ? styles.backgroundThemeColor.dark
-      : styles.backgroundThemeColor.dark,
+      ? styles.backgroundTouchableColor.dark
+      : styles.backgroundTouchableColor.light,
   };
   const textColor = {
-    color: isDarkMode ? styles.textColor.dark : styles.textColor.light,
+    color: isDarkMode ? styles.textColor.dark : styles.textColor.dark,
   };
   return (
     <View>
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  backgroundThemeColor: {
+  backgroundTouchableColor: {
     dark: '#606163',
-    light: '#f0f0ed',
+    light: '#d0d0d0',
   },
   textColor: {
     dark: '#f79700',

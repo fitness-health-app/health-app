@@ -2,13 +2,14 @@ import React from 'react';
 import {View, Text, StyleSheet, useColorScheme, Image} from 'react-native';
 import LoginTypeTouchable from '../components/LoginTypeTouchable';
 import CustomButtons from '../components/CustomButtons';
+import {backgroundThemeColor} from '../styles/globalStyles';
 
 const HomePage = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode
-      ? styles.backgroundThemeColor.dark
-      : styles.backgroundThemeColor.light,
+      ? backgroundThemeColor.dark
+      : backgroundThemeColor.light,
   };
   const textColorStyle = {
     color: isDarkMode ? styles.textColor.light : styles.textColor.dark,
@@ -42,7 +43,7 @@ const HomePage = ({navigation}) => {
                 source={require('../assests/images/nutrition.png')}
                 style={{width: 50, height: 40}}
               />
-              <Text style={styles.textImageDescription}>
+              <Text style={[styles.textImageDescription, textColorStyle]}>
                 Track what you eat
               </Text>
             </View>
@@ -53,18 +54,18 @@ const HomePage = ({navigation}) => {
                 source={require('../assests/images/exercise.png')}
                 style={{width: 80, height: 40}}
               />
-              <Text style={styles.textImageDescription}>
+              <Text style={[styles.textImageDescription, textColorStyle]}>
                 Track what your exercises
               </Text>
             </View>
           </View>
           <View>
-            <View style={styles.viewDescription}>
+            <View style={[styles.viewDescription]}>
               <Image
                 source={require('../assests/images/chart.png')}
                 style={{width: 60, height: 60}}
               />
-              <Text style={styles.textImageDescription}>
+              <Text style={[styles.textImageDescription, textColorStyle]}>
                 Track & follow a calorie budget
               </Text>
             </View>
