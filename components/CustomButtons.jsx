@@ -7,21 +7,43 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-const CustomButtons = ({buttonText, onPressHandleFunction}) => {
+const CustomButtons = ({
+  buttonText,
+  onPressHandleFunction,
+  width,
+  height,
+  customButtonBackgroundColor,
+  customButtonTextColor,
+}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const buttonBackgroundColor = {
+  const customButtonColor = {
+    backgroundColor: customButtonBackgroundColor,
+  };
+  const customTextColor = {
+    color: customButtonTextColor,
+  };
+  const defaultButtonColor = {
     backgroundColor: isDarkMode
       ? styles.backgroundTouchableColor.dark
       : styles.backgroundTouchableColor.light,
   };
-  const textColor = {
+  const defaultTextColor = {
     color: isDarkMode ? styles.textColor.dark : styles.textColor.dark,
   };
+  const buttonBackgroundColor = customButtonBackgroundColor
+    ? customButtonColor
+    : defaultButtonColor;
+  const textColor = customButtonTextColor ? customTextColor : defaultTextColor;
   return (
     <View>
       <TouchableHighlight activeOpacity={0.6} onPress={onPressHandleFunction}>
-        <View style={[styles.viewTouchable, buttonBackgroundColor]}>
+        <View
+          style={[
+            styles.viewTouchable,
+            buttonBackgroundColor,
+            {width: width, height: height},
+          ]}>
           <Text style={[styles.textTouchable, textColor]}>{buttonText}</Text>
         </View>
       </TouchableHighlight>
@@ -35,8 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     padding: 10,
-    width: 350,
-    height: 50,
   },
   textTouchable: {
     fontSize: 20,

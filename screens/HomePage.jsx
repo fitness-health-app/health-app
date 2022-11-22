@@ -77,10 +77,14 @@ const HomePage = ({navigation}) => {
           <CustomButtons
             buttonText={'About Us'}
             onPressHandleFunction={onPressHandlerAbout}
+            width={350}
+            height={50}
           />
           <CustomButtons
             buttonText={'Contact Us'}
             onPressHandleFunction={onPressHandlerContactUs}
+            width={350}
+            height={50}
           />
         </View>
       </View>

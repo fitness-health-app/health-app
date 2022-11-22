@@ -9,8 +9,9 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
-import HomePage from './screens/HomePage';
 import {backgroundThemeColor} from './styles/globalStyles';
+import HomePage from './screens/HomePage';
+import Login from './screens/Login';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,7 +28,8 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <HomePage />
+      {/* <Login /> */}
+      {/* <HomePage /> */}
     </View>
   );
 };
@@ -38,10 +40,6 @@ const styles = StyleSheet.create({
   },
   textSize: {
     fontSize: 40,
-  },
-  backgroundThemeColor: {
-    dark: '#1c1e21',
-    light: '#f0f0ed',
   },
 });
 
