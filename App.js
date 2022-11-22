@@ -12,6 +12,7 @@ import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
 import {backgroundThemeColor} from './styles/globalStyles';
 import HomePage from './screens/HomePage';
 import Login from './screens/Login';
+import Signup from './screens/Signup';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,8 +29,9 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      {/* <Login /> */}
       {/* <HomePage /> */}
+      {/* <Login /> */}
+      {/* <Signup /> */}
     </View>
   );
 };
