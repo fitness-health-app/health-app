@@ -16,6 +16,7 @@ import Signup from './screens/Signup';
 import ContactUs from './screens/ContactUs';
 import About from './screens/About';
 import Dashboard from './screens/Dashboard';
+import Statistics from './screens/Statistics';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -37,7 +38,8 @@ const App = () => {
       {/* <Signup /> */}
       {/* <ContactUs /> */}
       {/* <About /> */}
-      <Dashboard />
+      {/* <Dashboard /> */}
+      {/* <Statistics /> */}
     </View>
   );
 };
