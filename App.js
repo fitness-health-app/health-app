@@ -15,6 +15,7 @@ import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ContactUs from './screens/ContactUs';
 import About from './screens/About';
+import Dashboard from './screens/Dashboard';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -35,7 +36,8 @@ const App = () => {
       {/* <Login /> */}
       {/* <Signup /> */}
       {/* <ContactUs /> */}
-      <About />
+      {/* <About /> */}
+      <Dashboard />
     </View>
   );
 };
