@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  useColorScheme,
-  TouchableHighlight,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
-const LoginTypeTouchable = ({loginText}) => {
-  const onPressHandlerLogin = () => {
-    console.log('Login');
-  };
+const LoginTypeTouchable = ({loginText, onPressHandle}) => {
   return (
     <View>
-      <TouchableHighlight onPress={onPressHandlerLogin}>
+      <TouchableHighlight onPress={onPressHandle}>
         <Text style={styles.textLogin}>{loginText}</Text>
       </TouchableHighlight>
     </View>

@@ -22,11 +22,21 @@ const HomePage = ({navigation}) => {
     navigation.navigate('ContactUs');
   };
 
+  const onPressHandleLogin = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={[styles.viewBody, backgroundStyle]}>
       <View style={styles.viewLoginRow}>
-        <LoginTypeTouchable loginText={'Coach?'} />
-        <LoginTypeTouchable loginText={'User?'} />
+        <LoginTypeTouchable
+          loginText={'Coach?'}
+          onPressHandle={onPressHandleLogin}
+        />
+        <LoginTypeTouchable
+          loginText={'User?'}
+          onPressHandle={onPressHandleLogin}
+        />
       </View>
       <View style={styles.viewTitleRow}>
         <Text style={[textColorStyle, styles.textTitle]}>Health App</Text>

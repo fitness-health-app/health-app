@@ -11,7 +11,7 @@ import {
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode
@@ -22,7 +22,7 @@ const Signup = () => {
     color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
   };
 
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,8 +30,11 @@ const Signup = () => {
     console.log('SignUp');
   };
 
-  const onPressHandler = () => {
-    console.log('Signup');
+  const onPressHandlerGoogle = () => {
+    console.log('Signup with Google');
+  };
+  const onPressHandlerLogin = () => {
+    navigation.navigate('Login');
   };
 
   return (
@@ -40,7 +43,7 @@ const Signup = () => {
         <Text style={[textColorStyle, styles.textTitle]}>Sign Up</Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <TextInput
+        <TextInput
           style={styles.textInput}
           onChangeText={setName}
           value={name}
@@ -86,7 +89,7 @@ const Signup = () => {
             <Text style={[textColorStyle]}>-or-</Text>
           </View>
           <TouchableHighlight
-            onPress={onPressHandler}
+            onPress={onPressHandlerGoogle}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
@@ -96,7 +99,7 @@ const Signup = () => {
             Forgot Password?
           </Text>
           <TouchableHighlight
-            onPress={onPressHandler}
+            onPress={onPressHandlerLogin}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
             <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
               Already have an account? Sign In!

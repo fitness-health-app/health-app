@@ -11,7 +11,7 @@ import {
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode
@@ -26,11 +26,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const loginAndStoreData = () => {
-    console.log('Login');
+    console.log('Pressed Login');
   };
 
-  const onPressHandler = () => {
-    console.log('Signup');
+  const onPressHandlerSignup = () => {
+    navigation.navigate('Signup');
+  };
+  const onPressHandlerGoogle = () => {
+    console.log('Login with Google');
   };
 
   return (
@@ -76,7 +79,7 @@ const Login = () => {
             <Text style={[textColorStyle]}>-or-</Text>
           </View>
           <TouchableHighlight
-            onPress={onPressHandler}
+            onPress={onPressHandlerGoogle}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
@@ -86,7 +89,7 @@ const Login = () => {
             Forgot Password?
           </Text>
           <TouchableHighlight
-            onPress={onPressHandler}
+            onPress={onPressHandlerSignup}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
             <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
               Don't have an account? Sign up!
