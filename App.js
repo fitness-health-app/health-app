@@ -7,20 +7,14 @@
  */
 
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
-import {StatusBar, useColorScheme, StyleSheet, View, Text} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import React, {useState} from 'react';
+import {StatusBar, useColorScheme, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import LoginDrawerNavigator from './navigation/LoginDrawerNavigation';
-
-import HomePage from './screens/HomePage';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
-import About from './screens/About';
-import ContactUs from './screens/ContactUs';
+import {backgroundThemeColor} from './styles/globalStyles';
+import StackNavigator from './navigation/StackNavigator';
+import BottomTabNavigation from './navigation/BottomTabNavigation';
 
 const Stack = createStackNavigator();
 
@@ -29,29 +23,10 @@ const App = () => {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode
-      ? styles.backgroundColorTheme.dark
-      : styles.backgroundColorTheme.light,
+      ? backgroundThemeColor.dark
+      : backgroundThemeColor.light,
   };
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    try {
-      AsyncStorage.getItem('userName').then(value => {
-        if (value != null) {
-          setIsLoggedIn(true);
-          console.log({value});
-        }
-      });
-    } catch (error) {
-      console.log({error});
-    }
-  };
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <View style={[styles.body, backgroundStyle]}>
       <StatusBar
@@ -59,16 +34,19 @@ const App = () => {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="HomePage" component={HomePage} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="ContactUs" component={ContactUs} />
-          <Stack.Screen
-            name="LoginDrawerNavigator"
-            component={LoginDrawerNavigator}
-          />
+        <Stack.Navigator initialRouteName="StackNavigator">
+          {isLoggedIn ? (
+            <Stack.Group screenOptions={{headerShown: false}}>
+              <Stack.Screen
+                name="BottomTabNavigation"
+                component={BottomTabNavigation}
+              />
+            </Stack.Group>
+          ) : (
+            <Stack.Group screenOptions={{headerShown: false}}>
+              <Stack.Screen name="StackNavigator" component={StackNavigator} />
+            </Stack.Group>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </View>
@@ -79,17 +57,8 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  text: {
-    color: '#0F0F0F',
+  textSize: {
     fontSize: 40,
-  },
-  backgroundColorTheme: {
-    dark: '#00155F',
-    light: '#f0f0ed',
-  },
-  textColor: {
-    dark: '#000000',
-    light: '#FFFFFF',
   },
 });
 
