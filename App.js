@@ -7,11 +7,16 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {backgroundThemeColor} from './styles/globalStyles';
-import HomePageStackNavigator from './navigation/HomePageStackNavigator';
+import StackNavigator from './navigation/StackNavigator';
+import BottomTabNavigation from './navigation/BottomTabNavigation';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,14 +26,29 @@ const App = () => {
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
   };
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <View style={[styles.body, backgroundStyle]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <HomePageStackNavigator />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="StackNavigator">
+          {isLoggedIn ? (
+            <Stack.Group screenOptions={{headerShown: false}}>
+              <Stack.Screen
+                name="BottomTabNavigation"
+                component={BottomTabNavigation}
+              />
+            </Stack.Group>
+          ) : (
+            <Stack.Group screenOptions={{headerShown: false}}>
+              <Stack.Screen name="StackNavigator" component={StackNavigator} />
+            </Stack.Group>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 };
