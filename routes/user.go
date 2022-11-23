@@ -1,9 +1,9 @@
 package routes
 
 import (
+	"github.com/fitness-health-app/health-app-backend/controllers"
+	"github.com/fitness-health-app/health-app-backend/middleware"
 	"github.com/gin-gonic/gin"
-	"github.com/wpcodevo/golang-gorm-postgres/controllers"
-	"github.com/wpcodevo/golang-gorm-postgres/middleware"
 )
 
 type UserRouteController struct {

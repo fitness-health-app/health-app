@@ -4,11 +4,11 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/fitness-health-app/health-app-backend/controllers"
+	"github.com/fitness-health-app/health-app-backend/initializers"
+	"github.com/fitness-health-app/health-app-backend/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/wpcodevo/golang-gorm-postgres/controllers"
-	"github.com/wpcodevo/golang-gorm-postgres/initializers"
-	"github.com/wpcodevo/golang-gorm-postgres/routes"
 )
 
 var (

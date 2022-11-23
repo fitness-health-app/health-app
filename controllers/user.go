@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/fitness-health-app/health-app-backend/models"
 	"github.com/gin-gonic/gin"
-	"github.com/wpcodevo/golang-gorm-postgres/models"
 	"gorm.io/gorm"
 )
 
