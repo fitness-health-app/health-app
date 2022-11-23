@@ -23,7 +23,7 @@ var (
 func init() {
 	config, err := initializers.LoadConfig(".")
 	if err != nil {
-		log.Fatal("🚀 Could not load environment variables", err)
+		log.Fatal("Could not load environment variables", err)
 	}
 
 	initializers.ConnectDB(&config)
@@ -40,7 +40,7 @@ func init() {
 func main() {
 	config, err := initializers.LoadConfig(".")
 	if err != nil {
-		log.Fatal("🚀 Could not load environment variables", err)
+		log.Fatal("Could not load environment variables", err)
 	}
 
 	corsConfig := cors.DefaultConfig()
@@ -51,7 +51,7 @@ func main() {
 
 	router := server.Group("/api")
 	router.GET("/healthchecker", func(ctx *gin.Context) {
-		message := "Welcome to Golang with Gorm and Postgres"
+		message := "Health App Backend is Running"
 		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": message})
 	})
 
