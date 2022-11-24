@@ -1,14 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Dashboard from '../screens/Dashboard';
 import Statistics from '../screens/Statistics';
 import Tasks from '../screens/Tasks';
-
-import DrawerNavigator from './DrawerNavigator';
+import Settings from '../screens/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,8 +49,8 @@ const BottomTabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="DrawerNavigator"
-        component={DrawerNavigator}
+        name="Settings"
+        component={Settings}
         options={{
           tabBarLabel: 'Account',
           tabBarIcon: ({color, size}) => (
