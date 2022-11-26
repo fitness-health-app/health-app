@@ -1,0 +1,155 @@
+[
+    {
+        "Name": "Salmon-Stuffed Avocados",
+        "Description": "Canned salmon is a valuable pantry staple and a practical way to include heart-healthy, omega-3-rich fish in your diet. Here, we combine it with avocados in an easy no-cook meal.",
+        "Calories": 293,
+        "Ingridients": [
+            "½ cup nonfat plain Greek yogurt",
+            "½ cup diced celery",
+            "2 tablespoons chopped fresh parsley",
+            "2 teaspoons mayonnaise",
+            "1 teaspoon Dijon mustard"
+        ]
+    },
+    {
+        "Name": "Kale & White Bean Potpie with Chive Biscuits",
+        "Description": "In this vegetarian white bean potpie recipe, kale and hearty white beans are topped with easy, homemade chive biscuits. If desired, add a little shredded Gruyère or Cheddar cheese to the biscuit dough.",
+        "Calories": 277,
+        "Ingridients": [
+            "2 tablespoons extra-virgin olive oil plus 2 teaspoons, divided",
+            "1 cup chopped onion",
+            "½ cup chopped carrot",
+            "½ cup chopped celery",
+            "3 cloves garlic, minced",
+            "2 teaspoons chopped fresh thyme or 3/4 teaspoon dried"
+        ]
+    },
+    {
+        "Name": "Edamame Hummus Wrap",
+        "Description": "Made with protein-rich edamame instead of chickpeas, this easy hummus recipe is the perfect vegetarian filling for a grab-and-go wrap. Or double the recipe and use the hummus for a healthy snack with cut-up vegetables.",
+        "Calories": 339,
+        "Ingridients": [
+            "12 ounces frozen shelled edamame (about 2 1/4 cups), thawed",
+            "4 tablespoons lemon juice, divided",
+            "3 tablespoons extra-virgin olive oil, divided",
+            "2 tablespoons tahini",
+            "1 large clove garlic, chopped",
+            "½ teaspoon ground cumin",
+            "¾ teaspoon ground pepper, divided",
+            "½ teaspoon salt",
+            "2 cups very thinly sliced green cabbage"
+        ]
+    },
+    {
+        "Name": "Cheesy Chipotle-Cauliflower Mac",
+        "Description": "You'll barely notice the cauliflower in this comforting skillet pasta--it's pureed and mixed into the creamy cheese sauce.",
+        "Calories": 447,
+        "Ingridients": [
+            "3 cups cauliflower florets",
+            "8 ounces whole-wheat fusilli or rotini pasta",
+            "1 cup nonfat milk",
+            "1 chipotle pepper in adobo, minced, plus 1 tablespoon adobo sauce",
+            "1 tablespoon olive oil",
+            "¼ cup finely chopped yellow onion",
+            "2 cloves garlic, minced",
+            "4 cups chopped fresh spinach",
+            "¼ teaspoon salt",
+            "1 tablespoon whole-grain Dijon mustard"
+        ]
+    },
+    {
+        "Name": "Slow-Cooker Overnight Barley Porridge",
+        "Description": "At 6 grams per 1-cup serving, barley is high in fiber compared to many other whole grains. And it has high levels of prebiotic fiber, making it great for promoting healthy gut bacteria. Like oats, barley contains beta-glucans, a type of soluble fiber that's been shown to improve blood pressure and cholesterol levels.",
+        "Calories": 276,
+        "Ingridients": [
+            "8 cups unsweetened oat milk or other nondairy milk or water",
+            "2 cups pearled barley, rinsed",
+            "½ teaspoon salt"
+        ]
+    },
+    {
+        "Name": "Summer Vegetable Gnocchi Salad",
+        "Description": "This riff on pasta salad is best served warm while the gnocchi are nice and tender. Plus, the grilled veggies taste extra-good fresh off the fire in this easy gnocchi recipe.",
+        "Calories": 445,
+        "Ingridients": [
+            "1 (16 ounce) package whole-wheat gnocchi",
+            "1 small eggplant, sliced lengthwise into 1/2-inch planks",
+            "1 medium zucchini, sliced lengthwise into 1/2-inch planks",
+            "1 medium yellow squash, sliced lengthwise into 1/2-inch planks",
+            "1 ear corn, husked",
+            "½ medium red onion, cut into 1/2-inch-thick rings",
+            "4 tablespoons extra-virgin olive oil, divided",
+            "2 tablespoons balsamic vinegar",
+            "2 tablespoons chopped fresh basil",
+            "2 cloves garlic, grated",
+            "½ teaspoon ground pepper",
+            "¼ teaspoon salt",
+            "½ cup crumbled feta cheese"
+        ]
+    },
+    {
+        "Name": "Veggie & Hummus Sandwich",
+        "Description": "This mile-high vegetable and hummus sandwich makes the perfect heart-healthy vegetarian lunch to go. Mix it up with different flavors of hummus and different types of vegetables depending on your mood.",
+        "Calories": 325,
+        "Ingridients": [
+            "2 slices whole-grain bread",
+            "3 tablespoons hummus",
+            "¼ avocado, mashed",
+            "½ cup mixed salad greens",
+            "¼ medium red bell pepper, sliced",
+            "¼ cup sliced cucumber",
+            "¼ cup shredded carrot"
+        ]
+    },
+    {
+        "Name": "Chipotle Chicken Quinoa Burrito Bowl",
+        "Description": "This flavorful burrito bowl features grilled chicken coated in a spicy chipotle glaze. Loading it with vegetables and using quinoa in place of rice adds nutrition for a healthier dinner.",
+        "Calories": 325,
+        "Ingridients": [
+            "1 tablespoon finely chopped chipotle peppers in adobo sauce1 tablespoon extra-virgin olive oil",
+            "½ teaspoon garlic powder",
+            "½ teaspoon ground cumin",
+            "1 pound boneless, skinless chicken breast",
+            "¼ teaspoon salt",
+            "2 cups cooked quinoa",
+            "2 cups shredded romaine lettuce",
+            "1 cup canned pinto beans, rinsed",
+            "1 ripe avocado, diced",
+            "¼ cup prepared pico de gallo or other salsa",
+            "¼ cup shredded Cheddar or Monterey Jack cheese",
+            "Lime wedges for serving"
+        ]
+    },
+    {
+        "Name": "White Bean & Avocado Toast",
+        "Description": "These hearty vegan tacos are quick and easy to make, perfect for busy weeknights. They are so tasty no one will miss the meat or dairy.",
+        "Calories": 325,
+        "Ingridients": [
+            "1 slice whole-wheat bread, toasted",
+            "¼ avocado, mashed",
+            "½ cup canned white beans, rinsed and drained",
+            "Kosher salt to taste",
+            "Ground pepper to taste",
+            "1 pinch Crushed red pepper"
+        ]
+    },
+    {
+        "Name": "Roasted Vegetable & Black Bean Tacos",
+        "Description": "These hearty vegan tacos are quick and easy to make, perfect for busy weeknights. They are so tasty no one will miss the meat or dairy.",
+        "Calories": 230,
+        "Ingridients": [
+            "1 cup roasted root vegetables (see associated recipe)",
+            "½ cup cooked or canned black beans, rinsed",
+            "2 teaspoons extra-virgin olive oil",
+            "1 teaspoon ground cumin",
+            "1 teaspoon chili powder",
+            "½ teaspoon ground coriander",
+            "¼ teaspoon kosher salt",
+            "¼ teaspoon ground pepper",
+            "4 corn tortillas, lightly toasted or warmed",
+            "½ avocado, cut into 8 slices",
+            "1 lime, cut into wedges",
+            "Chopped fresh cilantro & salsa for garnish"
+        ]
+    }
+]
