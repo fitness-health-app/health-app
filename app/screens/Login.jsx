@@ -6,7 +6,6 @@ import {
   useColorScheme,
   TextInput,
   TouchableHighlight,
-  Alert,
 } from 'react-native';
 import {useRecoilState} from 'recoil';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';

@@ -6,7 +6,6 @@ import {
   useColorScheme,
   TextInput,
   TouchableHighlight,
-  Alert,
 } from 'react-native';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';

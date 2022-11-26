@@ -1,12 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StatusBar,
-  useColorScheme,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-} from 'react-native';
+import React from 'react';
+import {useColorScheme, StyleSheet, View, Text, Image} from 'react-native';
 
 const Splash = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -19,19 +12,6 @@ const Splash = () => {
 
   return (
     <View style={[styles.body, backgroundStyle]}>
-      <View style={{justifyContent: 'space-around'}}>
-        {isDarkMode ? (
-          <Image
-            source={require('../assests/images/logo_3.png')}
-            style={{width: 180, height: 180}}
-          />
-        ) : (
-          <Image
-            source={require('../assests/images/logo_3.png')}
-            style={{width: 180, height: 180}}
-          />
-        )}
-      </View>
       <View style={{justifyContent: 'space-around'}}>
         <Text style={[styles.text]}>Health App</Text>
       </View>

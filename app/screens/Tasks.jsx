@@ -16,7 +16,7 @@ const Tasks = () => {
 
   return (
     <View style={[styles.body, backgroundStyle]}>
-      <View style={{alignItems: 'center'}}>
+      <View style={styles.viewHeading}>
         <Text style={[textColorStyle, styles.textTitle]}>Tasks
       </Text>
       </View>
@@ -28,8 +28,12 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
+  viewHeading: {
+    alignItems: 'center',
+    padding: 25,
+  },
   textTitle: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     padding: 2,
   },
