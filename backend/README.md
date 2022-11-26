@@ -5,6 +5,9 @@ A RESTful API Backend of an application for fitness enthusiastic customers and c
 ```bash
 # Clone this project
 git clone https://github.com/fitness-health-app/health-app-backend.git
+
+# Enter into backend folder
+cd backend
 ```
 
 Before running API server, you should set the database config with yours or set the your database
