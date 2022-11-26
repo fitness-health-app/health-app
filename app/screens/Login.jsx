@@ -8,8 +8,10 @@ import {
   TouchableHighlight,
   Alert,
 } from 'react-native';
+import {useRecoilState} from 'recoil';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
+import {currentUserState} from '../atoms/users';
 
 const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,9 +26,12 @@ const Login = ({navigation}) => {
 
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
   const loginAndStoreData = () => {
-    console.log('Pressed Login');
+    if (user.length !== 0 && password.length !== 0) {
+      setCurrentUser({name: user, isLoggedIn: true});
+    }
   };
 
   const onPressHandlerSignup = () => {

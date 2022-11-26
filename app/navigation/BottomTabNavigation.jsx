@@ -1,5 +1,5 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -8,23 +8,25 @@ import Statistics from '../screens/Statistics';
 import Tasks from '../screens/Tasks';
 import Settings from '../screens/Settings';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="Dashboard"
       screenOptions={{
-        tabBarActiveTintColor: '#f79700',
         headerShown: false,
-      }}>
+      }}
+      activeColor="#f79700"
+      inactiveColor="#f0edf6"
+      barStyle={{backgroundColor: '#515151'}}>
       <Tab.Screen
         name="Dashboard"
         component={Dashboard}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5 name="home" size={size} color={color} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="home" size={22} color={color} />
           ),
         }}
       />
@@ -33,8 +35,8 @@ const BottomTabNavigation = () => {
         component={Statistics}
         options={{
           tabBarLabel: 'Statistics',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5 name="chart-line" size={size} color={color} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="chart-line" size={22} color={color} />
           ),
         }}
       />
@@ -43,8 +45,8 @@ const BottomTabNavigation = () => {
         component={Tasks}
         options={{
           tabBarLabel: 'Tasks',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5 name="list-ul" size={size} color={color} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="list-ul" size={22} color={color} />
           ),
         }}
       />
@@ -53,8 +55,8 @@ const BottomTabNavigation = () => {
         component={Settings}
         options={{
           tabBarLabel: 'Account',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5 name="user-circle" size={size} color={color} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="user-circle" size={22} color={color} />
           ),
         }}
       />

@@ -8,10 +8,15 @@
 
 import 'react-native-gesture-handler';
 
+import {RecoilRoot} from 'recoil';
 import AppStack from './AppStack';
 
 const App = () => {
-  return <AppStack />;
+  return (
+    <RecoilRoot>
+      <AppStack />
+    </RecoilRoot>
+  );
 };
 
 export default App;
