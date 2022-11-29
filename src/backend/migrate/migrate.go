@@ -24,5 +24,12 @@ func main() {
 	}
 
 	initializers.DB.AutoMigrate(&models.User{})
+
+	initializers.DB.AutoMigrate(&models.Exercise{})
+	initializers.InsertExercisesData()
+
+	initializers.DB.AutoMigrate(&models.Nutrient{})
+	initializers.InsertNutrientsData()
+
 	fmt.Println("Migration complete")
 }
