@@ -6,7 +6,6 @@ import {
   useColorScheme,
   TextInput,
   TouchableHighlight,
-  Alert,
 } from 'react-native';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
@@ -23,13 +22,46 @@ const Signup = ({navigation}) => {
   };
 
   const [name, setName] = useState('');
-  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
 
   const loginAndStoreData = () => {
-    console.log('SignUp');
+    if (
+      name.length !== 0 &&
+      email.length !== 0 &&
+      password.length !== 0 &&
+      passwordConfirm.length !== 0
+    ) {
+      setIsLoading(true);
+      fetch(
+        'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+          body: JSON.stringify({
+            email: email,
+            name: name,
+            password: password,
+            passwordConfirm: passwordConfirm,
+          }),
+        },
+      )
+        .then(res => res.json())
+        .then(res => {
+          setData(res);
+        })
+        .then(setIsLoading(false))
+        .then(navigation.navigate('Login'))
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
   };
-
   const onPressHandlerGoogle = () => {
     console.log('Signup with Google');
   };
@@ -54,8 +86,8 @@ const Signup = ({navigation}) => {
         />
         <TextInput
           style={styles.textInput}
-          onChangeText={setUser}
-          value={user}
+          onChangeText={setEmail}
+          value={email}
           placeholder="EMAIL ADDRESS"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
@@ -66,6 +98,16 @@ const Signup = ({navigation}) => {
           onChangeText={setPassword}
           value={password}
           placeholder="PASSWORD"
+          color={isDarkMode ? '#d3d8dd' : '#00155F'}
+          underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
+          placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.textInput}
+          onChangeText={setPasswordConfirm}
+          value={passwordConfirm}
+          placeholder="CONFIRM PASSWORD"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
           placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
@@ -85,9 +127,6 @@ const Signup = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'space-around',
           }}>
-          <View style={{padding: 5}}>
-            <Text style={[textColorStyle]}>-or-</Text>
-          </View>
           <TouchableHighlight
             onPress={onPressHandlerGoogle}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
