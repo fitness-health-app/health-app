@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,11 @@ import {
   useColorScheme,
   TextInput,
   TouchableHighlight,
-  Alert,
 } from 'react-native';
+import {useRecoilState} from 'recoil';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
+import {currentUserState} from '../atoms/users';
 
 const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,10 +25,58 @@ const Login = ({navigation}) => {
 
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({access_token: null, status: null});
 
   const loginAndStoreData = () => {
-    console.log('Pressed Login');
+    if (user.length !== 0 && password.length !== 0) {
+      setIsLoading(true);
+      fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          email: user,
+          password: password,
+        }),
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(responseData => {
+          setData(previousData => ({
+            ...previousData,
+            access_token: responseData.access_token,
+            status: responseData.status,
+          }));
+        })
+        .then(setIsLoading(false))
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
   };
+  useEffect(() => {
+    if (data.length !== 0 && data.status === 'success') {
+      setCurrentUser({
+        name: user,
+        access_token: data.access_token,
+        status: data.status,
+        message: 'Logged In',
+        isLoggedIn: true,
+      });
+    } else {
+      setCurrentUser({
+        name: user,
+        access_token: data.access_token,
+        status: data.status,
+        message: data.message,
+        isLoggedIn: false,
+      });
+    }
+  }, [data]);
 
   const onPressHandlerSignup = () => {
     navigation.navigate('Signup');

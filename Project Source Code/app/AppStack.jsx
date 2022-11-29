@@ -1,24 +1,25 @@
 /**
- * Sample React Native App
+ * Sample React Native AppStack
  * https://github.com/facebook/react-native
  *
  * @format
  * @flow strict-local
  */
 
-import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useRecoilState} from 'recoil';
 
 import {backgroundThemeColor} from './styles/globalStyles';
 import StackNavigator from './navigation/StackNavigator';
 import BottomTabNavigation from './navigation/BottomTabNavigation';
+import {currentUserState} from './atoms/users';
 
 const Stack = createStackNavigator();
 
-const App = () => {
+const AppStack = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -26,7 +27,8 @@ const App = () => {
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
   };
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
   return (
     <View style={[styles.body, backgroundStyle]}>
       <StatusBar
@@ -35,7 +37,7 @@ const App = () => {
       />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="StackNavigator">
-          {isLoggedIn ? (
+          {currentUser.isLoggedIn ? (
             <Stack.Group screenOptions={{headerShown: false}}>
               <Stack.Screen
                 name="BottomTabNavigation"
@@ -62,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AppStack;
