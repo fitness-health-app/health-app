@@ -47,33 +47,17 @@ const AppStack = () => {
           isLoggedIn !== null
         ) {
           setCurrentUser({
-            name: user,
-            access_token: access_token,
-            status: status,
-            message: message,
-            isLoggedIn: isLoggedIn,
+            name: JSON.parse(user),
+            access_token: JSON.parse(access_token),
+            status: JSON.parse(status),
+            message: JSON.parse(message),
+            isLoggedIn: JSON.parse(isLoggedIn),
           });
         }
       } catch (err) {
         console.log('Error in AppStack: ', err);
       }
     };
-
-    const removeValue = async () => {
-      try {
-        await AsyncStorage.removeItem('@user');
-        await AsyncStorage.removeItem('@access_token');
-        await AsyncStorage.removeItem('@status');
-        await AsyncStorage.removeItem('@message');
-        await AsyncStorage.removeItem('@isLoggedIn');
-      } catch (err) {
-        // remove error
-        console.log(err);
-      }
-
-      console.log('Done.');
-    };
-    // removeValue();
     getUserData();
   }, []);
 
