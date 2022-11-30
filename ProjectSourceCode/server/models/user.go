@@ -25,6 +25,13 @@ type SignUpInput struct {
 	PasswordConfirm string `json:"passwordConfirm" binding:"required"`
 }
 
+type UpdateCrendentialInput struct {
+	Name            string `json:"name"`
+	Email           string `json:"email"  binding:"required"`
+	Password        string `json:"password"`
+	PasswordConfirm string `json:"passwordConfirm"`
+}
+
 type SignInInput struct {
 	Email    string `json:"email"  binding:"required"`
 	Password string `json:"password"  binding:"required"`
