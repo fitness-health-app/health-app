@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
 const Dashboard = () => {
@@ -13,6 +15,22 @@ const Dashboard = () => {
   const textColorStyle = {
     color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
   };
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const access_token = await AsyncStorage.getItem('@access_token');
+        const user = await AsyncStorage.getItem('@user');
+        if (access_token !== null && user !== null) {
+          console.log('Dashboard :: data :: access_token: ', {access_token});
+          console.log('Dashboard :: data :: user: ', {user});
+        }
+      } catch (err) {
+        console.log('Error in Dashboard: ', err);
+      }
+    };
+    getUserData();
+  }, []);
 
   return (
     <View style={[styles.body, backgroundStyle]}>

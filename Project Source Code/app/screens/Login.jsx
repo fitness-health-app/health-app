@@ -7,7 +7,9 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
-import {useRecoilState} from 'recoil';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
 import {currentUserState} from '../atoms/users';
@@ -25,9 +27,11 @@ const Login = ({navigation}) => {
 
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({access_token: null, status: null});
+  const [stateUpdate, setStateUpdate] = useState(false);
+  const currentUser = useRecoilValue(currentUserState);
+  const setCurrentUser = useSetRecoilState(currentUserState);
 
   const loginAndStoreData = () => {
     if (user.length !== 0 && password.length !== 0) {
@@ -67,16 +71,48 @@ const Login = ({navigation}) => {
         message: 'Logged In',
         isLoggedIn: true,
       });
+      setStateUpdate(true);
     } else {
       setCurrentUser({
-        name: user,
-        access_token: data.access_token,
+        name: '',
+        access_token: '',
         status: data.status,
-        message: data.message,
+        message: data.message ? data.message : '',
         isLoggedIn: false,
       });
+      setStateUpdate(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (stateUpdate) {
+      const storeData = async () => {
+        try {
+          if (
+            currentUser.user !== null &&
+            currentUser.access_token !== null &&
+            currentUser.status !== null &&
+            currentUser.message !== null &&
+            currentUser.isLoggedIn !== null
+          ) {
+            const user = JSON.stringify(currentUser.name);
+            const access_token = JSON.stringify(currentUser.access_token);
+            const status = JSON.stringify(currentUser.status);
+            const message = JSON.stringify(currentUser.message);
+            const isLoggedIn = JSON.stringify(currentUser.isLoggedIn);
+            await AsyncStorage.setItem('@user', user);
+            await AsyncStorage.setItem('@access_token', access_token);
+            await AsyncStorage.setItem('@status', status);
+            await AsyncStorage.setItem('@message', message);
+            await AsyncStorage.setItem('@isLoggedIn', isLoggedIn);
+          }
+        } catch (err) {
+          console.log('Error in Login: ', err);
+        }
+      };
+      storeData();
+    }
+  }, [stateUpdate]);
 
   const onPressHandlerSignup = () => {
     navigation.navigate('Signup');

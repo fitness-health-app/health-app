@@ -6,11 +6,12 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar, useColorScheme, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useRecoilState} from 'recoil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {backgroundThemeColor} from './styles/globalStyles';
 import StackNavigator from './navigation/StackNavigator';
@@ -28,6 +29,53 @@ const AppStack = () => {
       : backgroundThemeColor.light,
   };
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const user = await AsyncStorage.getItem('@user');
+        const access_token = await AsyncStorage.getItem('@access_token');
+        const status = await AsyncStorage.getItem('@status');
+        const message = await AsyncStorage.getItem('@message');
+        const isLoggedIn = await AsyncStorage.getItem('@isLoggedIn');
+
+        if (
+          access_token !== null &&
+          user !== null &&
+          status !== null &&
+          message !== null &&
+          isLoggedIn !== null
+        ) {
+          setCurrentUser({
+            name: user,
+            access_token: access_token,
+            status: status,
+            message: message,
+            isLoggedIn: isLoggedIn,
+          });
+        }
+      } catch (err) {
+        console.log('Error in AppStack: ', err);
+      }
+    };
+
+    const removeValue = async () => {
+      try {
+        await AsyncStorage.removeItem('@user');
+        await AsyncStorage.removeItem('@access_token');
+        await AsyncStorage.removeItem('@status');
+        await AsyncStorage.removeItem('@message');
+        await AsyncStorage.removeItem('@isLoggedIn');
+      } catch (err) {
+        // remove error
+        console.log(err);
+      }
+
+      console.log('Done.');
+    };
+    // removeValue();
+    getUserData();
+  }, []);
 
   return (
     <View style={[styles.body, backgroundStyle]}>
