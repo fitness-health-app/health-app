@@ -1,4 +1,4 @@
-module github.com/fitness-health-app/health-app-backend
+module github.com/fitness-health-app/health-app/ProjectSourceCode/server
 
 go 1.18
 

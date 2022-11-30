@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fitness-health-app/health-app-backend/initializers"
-	"github.com/fitness-health-app/health-app-backend/models"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/initializers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
 )
 
 func init() {
