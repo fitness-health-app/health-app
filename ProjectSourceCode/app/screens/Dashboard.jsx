@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useColorScheme, StyleSheet, View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRecoilState} from 'recoil';
 
+import {currentUserState} from '../atoms/users';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
 const Dashboard = () => {
@@ -15,22 +17,70 @@ const Dashboard = () => {
   const textColorStyle = {
     color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
   };
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [data, setData] = useState({
+    id: null,
+    name: null,
+    email: null,
+    role: null,
+    provider: null,
+    created_at: null,
+    updated_at: null,
+  });
 
   useEffect(() => {
-    const getUserData = async () => {
+    API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/users/me';
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.access_token}`,
+      },
+    };
+    fetch(API, options)
+      .then(res => {
+        return res.json();
+      })
+      .then(responseData => {
+        setData(previousData => ({
+          ...previousData,
+          id: responseData.data.user.id,
+          name: responseData.data.user.name,
+          email: responseData.data.user.email,
+          role: responseData.data.user.role,
+          provider: responseData.data.user.provider,
+          created_at: responseData.data.user.created_at,
+          updated_at: responseData.data.user.updated_at,
+        }));
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (data.id !== null) {
+      setCurrentUser(prevData => ({
+        ...prevData,
+        name: data.name,
+        id: data.id,
+        email: data.email,
+        isLoggedIn: true,
+      }));
+    }
+    const storeData = async () => {
       try {
-        const access_token = await AsyncStorage.getItem('@access_token');
-        const user = await AsyncStorage.getItem('@user');
-        if (access_token !== null && user !== null) {
-          console.log('Dashboard :: data :: access_token: ', {access_token});
-          console.log('Dashboard :: data :: user: ', {user});
+        if (data.name !== null) {
+          const name = JSON.stringify(data.name);
+          await AsyncStorage.setItem('@name', name);
         }
       } catch (err) {
-        console.log('Error in Dashboard: ', err);
+        console.log('Error in Login: ', err);
       }
     };
-    getUserData();
-  }, []);
+    storeData();
+  }, [data]);
 
   return (
     <View style={[styles.body, backgroundStyle]}>

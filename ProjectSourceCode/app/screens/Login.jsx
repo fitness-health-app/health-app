@@ -25,7 +25,7 @@ const Login = ({navigation}) => {
     color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
   };
 
-  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({access_token: null, status: null});
@@ -34,7 +34,7 @@ const Login = ({navigation}) => {
   const setCurrentUser = useSetRecoilState(currentUserState);
 
   const loginAndStoreData = () => {
-    if (user.length !== 0 && password.length !== 0) {
+    if (email.length !== 0 && password.length !== 0) {
       setIsLoading(true);
       fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/login', {
         method: 'POST',
@@ -42,7 +42,7 @@ const Login = ({navigation}) => {
           'Content-type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-          email: user,
+          email: email,
           password: password,
         }),
       })
@@ -64,22 +64,24 @@ const Login = ({navigation}) => {
   };
   useEffect(() => {
     if (data.length !== 0 && data.status === 'success') {
-      setCurrentUser({
-        name: user,
+      setCurrentUser(prevData => ({
+        ...prevData,
+        email: email,
         access_token: data.access_token,
         status: data.status,
         message: 'Logged In',
         isLoggedIn: true,
-      });
+      }));
       setStateUpdate(true);
     } else {
-      setCurrentUser({
-        name: '',
+      setCurrentUser(prevData => ({
+        ...prevData,
+        email: '',
         access_token: '',
         status: data.status,
         message: data.message ? data.message : '',
         isLoggedIn: false,
-      });
+      }));
       setStateUpdate(false);
     }
   }, [data]);
@@ -89,18 +91,19 @@ const Login = ({navigation}) => {
       const storeData = async () => {
         try {
           if (
-            currentUser.user !== null &&
+            currentUser.email !== null &&
             currentUser.access_token !== null &&
             currentUser.status !== null &&
             currentUser.message !== null &&
             currentUser.isLoggedIn !== null
           ) {
-            const user = JSON.stringify(currentUser.name);
+            const email = JSON.stringify(currentUser.email);
             const access_token = JSON.stringify(currentUser.access_token);
             const status = JSON.stringify(currentUser.status);
             const message = JSON.stringify(currentUser.message);
             const isLoggedIn = JSON.stringify(currentUser.isLoggedIn);
-            await AsyncStorage.setItem('@user', user);
+
+            await AsyncStorage.setItem('@email', email);
             await AsyncStorage.setItem('@access_token', access_token);
             await AsyncStorage.setItem('@status', status);
             await AsyncStorage.setItem('@message', message);
@@ -129,8 +132,8 @@ const Login = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <TextInput
           style={styles.textInput}
-          onChangeText={setUser}
-          value={user}
+          onChangeText={setEmail}
+          value={email}
           placeholder="EMAIL ADDRESS"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
