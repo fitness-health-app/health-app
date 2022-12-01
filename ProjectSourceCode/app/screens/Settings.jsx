@@ -8,7 +8,7 @@ import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import {currentUserState} from '../atoms/users';
 import CustomButtons from '../components/CustomButtons';
 
-const Settings = () => {
+const Settings = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -22,47 +22,11 @@ const Settings = () => {
   const secondaryTextColorStyle = {
     color: isDarkMode ? themeTextColor.light : '#757575',
   };
-  const [data, setData] = useState({
-    id: null,
-    name: null,
-    email: null,
-    role: null,
-    provider: null,
-    created_at: null,
-    updated_at: null,
-  });
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
-  useEffect(() => {
-    API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/users/me';
-    const options = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${currentUser.access_token}`,
-      },
-    };
-    fetch(API, options)
-      .then(res => {
-        return res.json();
-      })
-      .then(responseData => {
-        setData(previousData => ({
-          ...previousData,
-          id: responseData.data.user.id,
-          name: responseData.data.user.name,
-          email: responseData.data.user.email,
-          role: responseData.data.user.role,
-          provider: responseData.data.user.provider,
-          created_at: responseData.data.user.created_at,
-          updated_at: responseData.data.user.updated_at,
-        }));
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }, []);
+  const onPressHandleUpdateUser = () => {
+    navigation.navigate('UpdateUser');
+  };
 
   const logoutAndClearStorage = () => {
     API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/logout';
@@ -83,7 +47,8 @@ const Settings = () => {
       });
     const removeValue = async () => {
       try {
-        await AsyncStorage.removeItem('@user');
+        await AsyncStorage.removeItem('@name');
+        await AsyncStorage.removeItem('@email');
         await AsyncStorage.removeItem('@access_token');
         await AsyncStorage.removeItem('@status');
         await AsyncStorage.removeItem('@message');
@@ -92,13 +57,15 @@ const Settings = () => {
         console.log(err);
       }
     };
-    setCurrentUser({
+    setCurrentUser(prevData => ({
+      ...prevData,
       name: '',
+      email: '',
       access_token: '',
       status: '',
       message: '',
       isLoggedIn: false,
-    });
+    }));
     removeValue();
   };
 
@@ -126,15 +93,23 @@ const Settings = () => {
         <View style={[styles.viewTextAlignment]}>
           <View>
             <Text style={[secondaryTextColorStyle]}>Name</Text>
-            <Text style={[textColorStyle]}>{data.name}</Text>
+            <Text style={[textColorStyle]}>{currentUser.name}</Text>
           </View>
           <View style={[styles.viewTextAlignment]}>
             <Text style={[secondaryTextColorStyle]}>Email</Text>
-            <Text style={[textColorStyle]}>{data.email}</Text>
+            <Text style={[textColorStyle]}>{currentUser.email}</Text>
           </View>
           <View style={[styles.viewTextAlignment]}>
             <Text style={[secondaryTextColorStyle]}>ID</Text>
-            <Text style={[textColorStyle]}>{data.id}</Text>
+            <Text style={[textColorStyle]}>{currentUser.id}</Text>
+          </View>
+          <View style={[styles.viewTextAlignment]}>
+            <CustomButtons
+              buttonText={'Update'}
+              onPressHandleFunction={onPressHandleUpdateUser}
+              width={200}
+              height={50}
+            />
           </View>
           <View style={[styles.viewTextAlignment]}>
             <CustomButtons

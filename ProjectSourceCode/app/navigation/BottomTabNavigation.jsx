@@ -6,6 +6,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Dashboard from '../screens/Dashboard';
 import Statistics from '../screens/Statistics';
 import Tasks from '../screens/Tasks';
+import StackNavigatorSettings from './StackNavigatorSettings';
+
 import Settings from '../screens/Settings';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -51,8 +53,8 @@ const BottomTabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={Settings}
+        name="StackNavigatorSettings"
+        component={StackNavigatorSettings}
         options={{
           tabBarLabel: 'Account',
           tabBarIcon: ({color}) => (
