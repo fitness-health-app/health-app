@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useColorScheme, StyleSheet, View, Text} from 'react-native';
 import {useRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import {currentUserState} from '../atoms/users';
@@ -17,6 +18,9 @@ const Settings = () => {
   };
   const textColorStyle = {
     color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
+  };
+  const secondaryTextColorStyle = {
+    color: isDarkMode ? themeTextColor.light : '#757575',
   };
   const [data, setData] = useState({
     id: null,
@@ -103,17 +107,45 @@ const Settings = () => {
       <View style={styles.viewHeading}>
         <Text style={[textColorStyle, styles.textTitle]}>Settings</Text>
       </View>
-      <Text>ID: {data.id}</Text>
-      <Text>Name: {data.name}</Text>
-      <Text>Email: {data.email}</Text>
-      <Text>Role: {data.role}</Text>
-      <Text>Provider: {data.provider}</Text>
-      <CustomButtons
-        buttonText={'Logout'}
-        onPressHandleFunction={logoutAndClearStorage}
-        width={200}
-        height={50}
-      />
+      <View
+        style={{
+          flexDirection: 'column',
+          paddingTop: 5,
+          paddingLeft: 15,
+        }}>
+        <View style={{padding: 10}}>
+          <FontAwesome5 name="user-circle" size={80} />
+        </View>
+        <View
+          style={{
+            padding: 5,
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+        <View style={[styles.viewTextAlignment]}>
+          <View>
+            <Text style={[secondaryTextColorStyle]}>Name</Text>
+            <Text style={[textColorStyle]}>{data.name}</Text>
+          </View>
+          <View style={[styles.viewTextAlignment]}>
+            <Text style={[secondaryTextColorStyle]}>Email</Text>
+            <Text style={[textColorStyle]}>{data.email}</Text>
+          </View>
+          <View style={[styles.viewTextAlignment]}>
+            <Text style={[secondaryTextColorStyle]}>ID</Text>
+            <Text style={[textColorStyle]}>{data.id}</Text>
+          </View>
+          <View style={[styles.viewTextAlignment]}>
+            <CustomButtons
+              buttonText={'Logout'}
+              onPressHandleFunction={logoutAndClearStorage}
+              width={200}
+              height={50}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -130,6 +162,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     padding: 2,
+  },
+  viewTextAlignment: {
+    paddingTop: 25,
+    justifyContent: 'space-evenly',
   },
 });
 
