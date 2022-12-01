@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/fitness-health-app/health-app-backend/initializers"
-	"github.com/fitness-health-app/health-app-backend/models"
-	"github.com/fitness-health-app/health-app-backend/utils"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/initializers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/utils"
 	"github.com/gin-gonic/gin"
 )
 

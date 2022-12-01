@@ -4,10 +4,10 @@ A RESTful API Backend of an application for fitness enthusiastic customers and c
 ## Installation & Run
 ```bash
 # Clone this project
-git clone https://github.com/fitness-health-app/health-app-backend.git
+git clone https://github.com/fitness-health-app/health-app.git
 
 # Enter into backend folder
-cd backend
+cd ProjectSourceCode/server
 ```
 
 Before running API server, you should set the database config with yours or set the your database
@@ -32,9 +32,10 @@ go run main.go
 
 At this time, you have a RESTful API server running at `http://127.0.0.1:8000`. It provides the following endpoints:
 
-* `GET /healthcheck`: a healthcheck service provided for health checking purpose if is running
+* `GET /api/healthcheck`: a healthcheck service provided for health checking purpose if is running
 * `GET /api/users/me`: retrieve profile data
 * `POST /api/auth/register`: create a new user
+* `POST /api/auth/update`: update a new user by user email
 * `POST /api/auth/login`: returns the detailed information of an album
 * `GET /api/auth/refresh`: refresh the access token
 * `GET /api/auth/logout`: logout the user

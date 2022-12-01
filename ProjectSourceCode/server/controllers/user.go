@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/fitness-health-app/health-app-backend/models"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

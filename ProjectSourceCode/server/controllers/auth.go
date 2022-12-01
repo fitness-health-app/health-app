@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fitness-health-app/health-app-backend/initializers"
-	"github.com/fitness-health-app/health-app-backend/models"
-	"github.com/fitness-health-app/health-app-backend/utils"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/initializers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -19,6 +19,66 @@ type AuthController struct {
 
 func NewAuthController(DB *gorm.DB) AuthController {
 	return AuthController{DB}
+}
+
+// UpdateCredential User
+func (ac *AuthController) UpdateCredentialUser(ctx *gin.Context) {
+	var payload *models.UpdateCrendentialInput
+
+	if err := ctx.ShouldBindJSON(&payload); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": err.Error()})
+		return
+	}
+
+	var user models.User
+	result := ac.DB.First(&user, "email = ?", strings.ToLower(payload.Email))
+	if result.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "User not found"})
+		return
+	}
+
+	if payload.Password != "" {
+		if payload.Password != payload.PasswordConfirm {
+			ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "Passwords do not match"})
+			return
+		}
+
+		hashedPassword, err := utils.HashPassword(payload.Password)
+		if err != nil {
+			ctx.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": err.Error()})
+			return
+		}
+
+		if err := utils.VerifyPassword(user.Password, payload.Password); err == nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "New password cannot be the same"})
+			return
+		}
+
+		user.Password = hashedPassword
+	}
+
+	if payload.Name != "" {
+		user.Name = payload.Name
+	}
+
+	user.UpdatedAt = time.Now()
+
+	result = ac.DB.Save(&user)
+	if result.Error != nil {
+		ctx.JSON(http.StatusBadGateway, gin.H{"status": "error", "message": "Something bad happened"})
+		return
+	}
+
+	userResponse := &models.UserResponse{
+		ID:        user.ID,
+		Name:      user.Name,
+		Email:     user.Email,
+		Role:      user.Role,
+		Provider:  user.Provider,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
+	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"user": userResponse}})
 }
 
 // SignUp User

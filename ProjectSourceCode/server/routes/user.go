@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/fitness-health-app/health-app-backend/controllers"
-	"github.com/fitness-health-app/health-app-backend/middleware"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/controllers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/middleware"
 	"github.com/gin-gonic/gin"
 )
 

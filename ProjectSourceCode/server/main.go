@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/fitness-health-app/health-app-backend/controllers"
-	"github.com/fitness-health-app/health-app-backend/initializers"
-	"github.com/fitness-health-app/health-app-backend/routes"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/controllers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/initializers"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

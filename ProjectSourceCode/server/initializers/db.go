@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/fitness-health-app/health-app-backend/models"
+	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
