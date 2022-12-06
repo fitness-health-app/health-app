@@ -134,7 +134,7 @@ const Login = ({navigation}) => {
   return (
     <View style={[styles.viewBody, backgroundStyle]}>
       <View style={styles.viewTitleRow}>
-        <Text style={[textColorStyle, styles.textTitle]}>LOGIN</Text>
+        <Text style={[textColorStyle, styles.textTitle]}>Login</Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <TextInput
@@ -179,10 +179,10 @@ const Login = ({navigation}) => {
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
             </Text>
-          </TouchableHighlight> */}
+          </TouchableHighlight> 
           <Text style={[styles.textAlternateLogin, textColorStyle]}>
             Forgot Password?
-          </Text>
+          </Text> */}
           <TouchableHighlight
             onPress={onPressHandlerSignup}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>

@@ -147,10 +147,10 @@ const Signup = ({navigation}) => {
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
             </Text>
-          </TouchableHighlight> */}
+          </TouchableHighlight> 
           <Text style={[styles.textAlternateLogin, textColorStyle]}>
             Forgot Password?
-          </Text>
+          </Text> */}
           <TouchableHighlight
             onPress={onPressHandlerLogin}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
