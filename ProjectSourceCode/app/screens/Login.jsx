@@ -13,6 +13,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
 import {currentUserState} from '../atoms/users';
+import {
+  validateEmail,
+  validatePassword,
+  invalidLogin,
+} from '../utils/validations';
 
 const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -34,7 +39,7 @@ const Login = ({navigation}) => {
   const setCurrentUser = useSetRecoilState(currentUserState);
 
   const loginAndStoreData = () => {
-    if (email.length !== 0 && password.length !== 0) {
+    if (validateEmail(email) && validatePassword(password)) {
       setIsLoading(true);
       fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/login', {
         method: 'POST',
@@ -46,8 +51,9 @@ const Login = ({navigation}) => {
           password: password,
         }),
       })
-        .then(res => {
-          return res.json();
+        .then(response => {
+          if (!response.ok) throw new Error(response.status);
+          else return response.json();
         })
         .then(responseData => {
           setData(previousData => ({
@@ -58,6 +64,7 @@ const Login = ({navigation}) => {
         })
         .then(setIsLoading(false))
         .catch(err => {
+          invalidLogin();
           console.log(err.message);
         });
     }
@@ -120,9 +127,9 @@ const Login = ({navigation}) => {
   const onPressHandlerSignup = () => {
     navigation.navigate('Signup');
   };
-  const onPressHandlerGoogle = () => {
-    console.log('Login with Google');
-  };
+  // const onPressHandlerGoogle = () => {
+  //   console.log('Login with Google');
+  // };
 
   return (
     <View style={[styles.viewBody, backgroundStyle]}>
@@ -163,7 +170,7 @@ const Login = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'space-around',
           }}>
-          <View style={{padding: 5}}>
+          {/* <View style={{padding: 5}}>
             <Text style={[textColorStyle]}>-or-</Text>
           </View>
           <TouchableHighlight
@@ -172,7 +179,7 @@ const Login = ({navigation}) => {
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
             </Text>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
           <Text style={[styles.textAlternateLogin, textColorStyle]}>
             Forgot Password?
           </Text>

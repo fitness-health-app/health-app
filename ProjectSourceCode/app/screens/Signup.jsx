@@ -9,6 +9,13 @@ import {
 } from 'react-native';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
+import {
+  validateName,
+  validateEmail,
+  validateSignupPassword,
+  invalidSignup,
+  successValidation,
+} from '../utils/validations';
 
 const Signup = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -30,10 +37,9 @@ const Signup = ({navigation}) => {
 
   const loginAndStoreData = () => {
     if (
-      name.length !== 0 &&
-      email.length !== 0 &&
-      password.length !== 0 &&
-      passwordConfirm.length !== 0
+      validateName(name) &&
+      validateEmail(email) &&
+      validateSignupPassword(password, passwordConfirm)
     ) {
       setIsLoading(true);
       fetch(
@@ -51,20 +57,25 @@ const Signup = ({navigation}) => {
           }),
         },
       )
-        .then(res => res.json())
+        .then(response => {
+          if (!response.ok) throw new Error(response.status);
+          else return response.json();
+        })
         .then(res => {
           setData(res);
         })
         .then(setIsLoading(false))
+        .then(successValidation())
         .then(navigation.navigate('Login'))
         .catch(err => {
+          invalidSignup();
           console.log(err.message);
         });
     }
   };
-  const onPressHandlerGoogle = () => {
-    console.log('Signup with Google');
-  };
+  // const onPressHandlerGoogle = () => {
+  //   console.log('Signup with Google');
+  // };
   const onPressHandlerLogin = () => {
     navigation.navigate('Login');
   };
@@ -79,6 +90,7 @@ const Signup = ({navigation}) => {
           style={styles.textInput}
           onChangeText={setName}
           value={name}
+          maxLength={15}
           placeholder="NAME"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
@@ -97,6 +109,7 @@ const Signup = ({navigation}) => {
           style={styles.textInput}
           onChangeText={setPassword}
           value={password}
+          maxLength={15}
           placeholder="PASSWORD"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
@@ -107,6 +120,7 @@ const Signup = ({navigation}) => {
           style={styles.textInput}
           onChangeText={setPasswordConfirm}
           value={passwordConfirm}
+          maxLength={15}
           placeholder="CONFIRM PASSWORD"
           color={isDarkMode ? '#d3d8dd' : '#00155F'}
           underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
@@ -127,13 +141,13 @@ const Signup = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'space-around',
           }}>
-          <TouchableHighlight
+          {/* <TouchableHighlight
             onPress={onPressHandlerGoogle}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
             <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
               Google+
             </Text>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
           <Text style={[styles.textAlternateLogin, textColorStyle]}>
             Forgot Password?
           </Text>
