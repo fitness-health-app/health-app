@@ -33,11 +33,18 @@ go run main.go
 At this time, you have a RESTful API server running at `http://127.0.0.1:8000`. It provides the following endpoints:
 
 * `GET /api/healthchecker`: a healthcheck service provided for health checking purpose if is running
+
+# User
 * `GET /api/users/me`: retrieve profile data
+
+# Auth
 * `POST /api/auth/register`: create a new user
 * `POST /api/auth/update`: update a new user by user email
 * `POST /api/auth/login`: returns the detailed information of an album
 * `GET /api/auth/refresh`: refresh the access token
 * `GET /api/auth/logout`: logout the user
+
+# Food
+* `GET /api/food/list`: list food on system `query params: limit and search`
 
 If you are using Postman as your API testing tool then import this file [Postman Collection JSON](HealthAppBackend.postman_collection.json)

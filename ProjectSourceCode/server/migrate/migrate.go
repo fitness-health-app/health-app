@@ -8,8 +8,11 @@ import (
 	"github.com/fitness-health-app/health-app/ProjectSourceCode/server/models"
 )
 
+var config initializers.Config
+
 func init() {
-	config, err := initializers.LoadConfig(".")
+	var err error
+	config, err = initializers.LoadConfig(".")
 	if err != nil {
 		log.Fatal("Could not load environment variables", err)
 	}
@@ -28,8 +31,10 @@ func main() {
 	initializers.DB.AutoMigrate(&models.Exercise{})
 	initializers.InsertExercisesData()
 
-	initializers.DB.AutoMigrate(&models.Nutrient{})
-	initializers.InsertNutrientsData()
+	initializers.DB.Migrator().DropTable(&models.Food{})
+
+	initializers.DB.AutoMigrate(&models.Food{})
+	initializers.InsertNutrientsData(&config)
 
 	fmt.Println("Migration complete")
 }
