@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
   View,
+  ScrollView,
   Text,
   StyleSheet,
   useColorScheme,
@@ -13,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import CustomButtons from '../components/CustomButtons';
 import {currentUserState} from '../atoms/users';
+import {API_URL} from '../config';
 
 const UpdateUser = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -50,7 +52,7 @@ const UpdateUser = ({navigation}) => {
   const updateAndStoreData = () => {
     if (email.length !== 0 && name.length !== 0) {
       setIsLoading(true);
-      fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/update', {
+      fetch(`${API_URL}/api/auth/update`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
@@ -83,40 +85,47 @@ const UpdateUser = ({navigation}) => {
   };
 
   return (
-    <View style={[styles.viewBody, backgroundStyle]}>
-      <View style={styles.viewTitleRow}>
-        <Text style={[textColorStyle, styles.textTitle]}>Update User</Text>
-      </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <View>
-          <Text style={[secondaryTextColorStyle]}>Name</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setName}
-            value={name}
-            placeholder="NAME"
-            color={isDarkMode ? '#d3d8dd' : '#00155F'}
-            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+    <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
+      <View style={[styles.viewBody, backgroundStyle]}>
+        <View style={styles.viewTitleRow}>
+          <Text style={[textColorStyle, styles.textTitle]}>Update User</Text>
+        </View>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View>
+            <Text style={[styles.updateText, secondaryTextColorStyle]}>
+              Name
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={setName}
+              value={name}
+              placeholder="NAME"
+              color={isDarkMode ? '#d3d8dd' : '#00155F'}
+              underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
+              placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+            />
+          </View>
+        </View>
+        <View style={{flex: 2, padding: 20}}>
+          <CustomButtons
+            buttonText={'Submit'}
+            onPressHandleFunction={updateAndStoreData}
+            width={200}
+            height={50}
           />
         </View>
       </View>
-      <View style={{flex: 2}}>
-        <CustomButtons
-          buttonText={'Submit'}
-          onPressHandleFunction={updateAndStoreData}
-          width={200}
-          height={50}
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  viewBody: {
+  scrollViewBody: {
     flex: 1,
     flexDirection: 'column',
+    padding: 10,
+  },
+  viewBody: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
     padding: 10,
@@ -137,6 +146,11 @@ const styles = StyleSheet.create({
     width: 300,
     margin: 8,
     padding: 10,
+  },
+  updateText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
   },
 });
 

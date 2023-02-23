@@ -6,6 +6,8 @@ import {useRecoilState} from 'recoil';
 import {currentUserState} from '../atoms/users';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
+import {API_URL} from '../config';
+
 const Dashboard = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -29,7 +31,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/users/me';
+    API = `${API_URL}/api/users/me`;
     const options = {
       method: 'GET',
       headers: {

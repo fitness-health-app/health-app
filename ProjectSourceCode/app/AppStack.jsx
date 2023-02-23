@@ -17,6 +17,7 @@ import {backgroundThemeColor} from './styles/globalStyles';
 import StackNavigator from './navigation/StackNavigator';
 import BottomTabNavigation from './navigation/BottomTabNavigation';
 import {currentUserState} from './atoms/users';
+import {API_URL} from './config';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,16 @@ const AppStack = () => {
     };
     getUserData();
   }, []);
+
+  // useEffect(() => {
+  //   fetch(`${API_URL}/api/healthchecker`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const dataJSON = JSON.stringify(data);
+  //       console.log(dataJSON);
+  //     })
+  //     .catch(error => console.error(error));
+  // });
 
   return (
     <View style={[styles.body, backgroundStyle]}>

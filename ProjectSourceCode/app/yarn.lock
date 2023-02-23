@@ -6026,6 +6026,11 @@
     "jscodeshift" "^0.13.1"
     "nullthrows" "^1.1.1"
 
+"react-native-config@^1.5.0":
+  "integrity" "sha512-slecooA/0tCwhb+RuWEbwLqtKirGh9vWPRpgDfH7uPAraCciqHNH2XjS9ylW+Spn4FUrHg5KWTqUGs9BdBADHg=="
+  "resolved" "https://registry.npmjs.org/react-native-config/-/react-native-config-1.5.0.tgz"
+  "version" "1.5.0"
+
 "react-native-gesture-handler@^2.8.0", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-poOSfz/w0IyD6Qwq7aaIRRfEaVTl1ecQFoyiIbpOpfNTjm2B1niY2FLrdVQIOtIOe+K9nH55Qal04nr4jGkHdQ=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.8.0.tgz"

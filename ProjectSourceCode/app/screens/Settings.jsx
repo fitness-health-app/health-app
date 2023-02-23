@@ -7,6 +7,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import {currentUserState} from '../atoms/users';
 import CustomButtons from '../components/CustomButtons';
+import {API_URL} from '../config';
 
 const Settings = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -29,7 +30,7 @@ const Settings = ({navigation}) => {
   };
 
   const logoutAndClearStorage = () => {
-    API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/logout';
+    API = `${API_URL}/api/auth/logout`;
     const options = {
       method: 'GET',
       headers: {

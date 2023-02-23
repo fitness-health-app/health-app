@@ -6,6 +6,7 @@ import {
   useColorScheme,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +19,8 @@ import {
   validatePassword,
   invalidLogin,
 } from '../utils/validations';
+import {API_URL} from '../config';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -37,14 +40,15 @@ const Login = ({navigation}) => {
   const [stateUpdate, setStateUpdate] = useState(false);
   const currentUser = useRecoilValue(currentUserState);
   const setCurrentUser = useSetRecoilState(currentUserState);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const loginAndStoreData = () => {
     if (validateEmail(email) && validatePassword(password)) {
       setIsLoading(true);
-      fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/login', {
+      fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
@@ -127,82 +131,83 @@ const Login = ({navigation}) => {
   const onPressHandlerSignup = () => {
     navigation.navigate('Signup');
   };
-  // const onPressHandlerGoogle = () => {
-  //   console.log('Login with Google');
-  // };
+  const toggleSecureTextEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
 
   return (
-    <View style={[styles.viewBody, backgroundStyle]}>
-      <View style={styles.viewTitleRow}>
-        <Text style={[textColorStyle, styles.textTitle]}>Login</Text>
-      </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={setEmail}
-          value={email}
-          placeholder="EMAIL ADDRESS"
-          color={isDarkMode ? '#d3d8dd' : '#00155F'}
-          underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-          placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-        />
-        <TextInput
-          style={styles.textInput}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="PASSWORD"
-          color={isDarkMode ? '#d3d8dd' : '#00155F'}
-          underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-          placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-          secureTextEntry
-        />
-        <CustomButtons
-          buttonText={'Sign In'}
-          onPressHandleFunction={loginAndStoreData}
-          width={200}
-          height={50}
-        />
-      </View>
-      <View style={styles.viewAlternateLogin}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'space-around',
-          }}>
-          {/* <View style={{padding: 5}}>
-            <Text style={[textColorStyle]}>-or-</Text>
+    <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
+      <View style={[styles.viewBody]}>
+        <View style={styles.viewTitleRow}>
+          <Text style={[textColorStyle, styles.textTitle]}>Login</Text>
+        </View>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={inputText => setEmail(inputText.trim())}
+            value={email}
+            placeholder="EMAIL ADDRESS"
+            color={isDarkMode ? '#d3d8dd' : '#00155F'}
+            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
+            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+          />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={inputText => setPassword(inputText.trim())}
+            value={password}
+            placeholder="PASSWORD"
+            color={isDarkMode ? '#d3d8dd' : '#00155F'}
+            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
+            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+            secureTextEntry={secureTextEntry}
+          />
+          <View style={{marginTop: 5, marginBottom: 35}}>
+            <TouchableOpacity onPress={toggleSecureTextEntry}>
+              <Text style={[textColorStyle]}>
+                {secureTextEntry ? 'Show' : 'Hide'} password
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableHighlight
-            onPress={onPressHandlerGoogle}
-            underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
-            <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
-              Google+
-            </Text>
-          </TouchableHighlight> 
-          <Text style={[styles.textAlternateLogin, textColorStyle]}>
-            Forgot Password?
-          </Text> */}
-          <TouchableHighlight
-            onPress={onPressHandlerSignup}
-            underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
-            <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
-              Don't have an account? Sign up!
-            </Text>
-          </TouchableHighlight>
+          <CustomButtons
+            buttonText={'Sign In'}
+            onPressHandleFunction={loginAndStoreData}
+            width={200}
+            height={50}
+          />
+        </View>
+        <View style={styles.viewAlternateLogin}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              padding: 30,
+            }}>
+            <TouchableHighlight
+              onPress={onPressHandlerSignup}
+              underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
+              <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
+                Don't have an account? Sign up!
+              </Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  viewBody: {
+  scrollViewBody: {
     flex: 1,
+    flexDirection: 'column',
+    padding: 10,
+  },
+  viewBody: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    padding: 10,
+    padding: 30,
   },
   viewTitleRow: {
     flex: 1,
