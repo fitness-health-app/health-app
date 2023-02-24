@@ -5,6 +5,7 @@ import {useRecoilState} from 'recoil';
 
 import {currentUserState} from '../atoms/users';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
+import CustomButtons from '../components/CustomButtons';
 
 import {API_URL} from '../config';
 
