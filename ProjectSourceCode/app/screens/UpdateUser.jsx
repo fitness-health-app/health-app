@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, StyleSheet, useColorScheme} from 'react-native';
 import {Button, TextInput, Text} from 'react-native-paper';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
