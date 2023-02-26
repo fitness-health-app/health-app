@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, useColorScheme, Image} from 'react-native';
-import { Button, Text} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 
-import LoginTypeTouchable from '../components/LoginTypeTouchable';
 import {backgroundThemeColor} from '../styles/globalStyles';
 
 const HomePage = ({navigation}) => {
@@ -11,9 +10,6 @@ const HomePage = ({navigation}) => {
     backgroundColor: isDarkMode
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
-  };
-  const textColorStyle = {
-    color: isDarkMode ? styles.textColor.light : styles.textColor.dark,
   };
   const onPressHandlerAbout = () => {
     navigation.navigate('About');
@@ -30,17 +26,21 @@ const HomePage = ({navigation}) => {
   return (
     <View style={[styles.viewBody, backgroundStyle]}>
       <View style={styles.viewLoginRow}>
-        <LoginTypeTouchable
-          loginText={'Coach?'}
-          onPressHandle={onPressHandleLogin}
-        />
-        <LoginTypeTouchable
-          loginText={'User?'}
-          onPressHandle={onPressHandleLogin}
-        />
+        <Button
+          mode="text"
+          labelStyle={styles.buttonLogin}
+          onPress={onPressHandleLogin}>
+          Coach?
+        </Button>
+        <Button
+          mode="text"
+          labelStyle={styles.buttonLogin}
+          onPress={onPressHandleLogin}>
+          User?
+        </Button>
       </View>
       <View style={styles.viewTitleRow}>
-        <Text style={[textColorStyle, styles.textTitle]}>Health App</Text>
+        <Text variant="displayMedium">Health App</Text>
       </View>
       <View style={styles.containerIntro}>
         <View
@@ -54,9 +54,7 @@ const HomePage = ({navigation}) => {
                 source={require('../assests/images/nutrition.png')}
                 style={{width: 50, height: 40}}
               />
-              <Text style={[styles.textImageDescription, textColorStyle]}>
-                Track what you eat
-              </Text>
+              <Text variant="titleLarge">Track what you eat</Text>
             </View>
           </View>
           <View>
@@ -65,9 +63,7 @@ const HomePage = ({navigation}) => {
                 source={require('../assests/images/exercise.png')}
                 style={{width: 80, height: 40}}
               />
-              <Text style={[styles.textImageDescription, textColorStyle]}>
-                Track what your exercises
-              </Text>
+              <Text variant="titleLarge">Track what your exercises</Text>
             </View>
           </View>
           <View>
@@ -76,9 +72,7 @@ const HomePage = ({navigation}) => {
                 source={require('../assests/images/chart.png')}
                 style={{width: 60, height: 60}}
               />
-              <Text style={[styles.textImageDescription, textColorStyle]}>
-                Track & follow a calorie budget
-              </Text>
+              <Text variant="titleLarge">Track & follow a calorie budget</Text>
             </View>
           </View>
         </View>
@@ -150,6 +144,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'center',
+  },
+  buttonLogin: {
+    fontSize: 18,
+    fontWeight: '200',
   },
   buttonSize: {
     height: 60,
