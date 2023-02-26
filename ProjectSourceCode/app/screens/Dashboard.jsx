@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useRecoilState} from 'recoil';
 
 import {currentUserState} from '../atoms/users';
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
-import CustomButtons from '../components/CustomButtons';
 
 import {API_URL} from '../config';
 
@@ -88,7 +89,7 @@ const Dashboard = () => {
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[textColorStyle, styles.textTitle]}>Dashboard</Text>
+        <Text variant="headlineLarge">Dashboard</Text>
       </View>
     </View>
   );

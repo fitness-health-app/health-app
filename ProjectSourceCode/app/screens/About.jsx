@@ -1,5 +1,7 @@
 import React from 'react';
-import {ScrollView, useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {ScrollView, useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
 const About = () => {
@@ -15,11 +17,11 @@ const About = () => {
   };
   return (
     <ScrollView style={[styles.body, backgroundStyle]}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={[textColorStyle, styles.textTitle]}>About Us</Text>
+      <View style={styles.viewHeading}>
+        <Text variant="headlineLarge">About</Text>
       </View>
       <View style={styles.viewDescription}>
-        <Text style={[textColorStyle, styles.textDescription]}>
+        <Text variant="bodyMedium">
           A digital health and wellness application with services such as
           calorie tracking and advice on nutrition and fitness. It is available
           on the Android and iOS platforms, and can be used with wearable
@@ -85,6 +87,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
+  },
+  viewHeading: {
+    alignItems: 'center',
+    padding: 25,
   },
   textDescription: {
     fontSize: 20,

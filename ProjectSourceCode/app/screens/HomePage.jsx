@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, useColorScheme, Image} from 'react-native';
+import {View, StyleSheet, useColorScheme, Image} from 'react-native';
+import { Button, Text} from 'react-native-paper';
+
 import LoginTypeTouchable from '../components/LoginTypeTouchable';
-import CustomButtons from '../components/CustomButtons';
 import {backgroundThemeColor} from '../styles/globalStyles';
 
 const HomePage = ({navigation}) => {
@@ -84,18 +85,22 @@ const HomePage = ({navigation}) => {
       </View>
       <View style={[styles.containerOtherLinks]}>
         <View style={[styles.viewButtons]}>
-          <CustomButtons
-            buttonText={'About Us'}
-            onPressHandleFunction={onPressHandlerAbout}
-            width={350}
-            height={50}
-          />
-          <CustomButtons
-            buttonText={'Contact Us'}
-            onPressHandleFunction={onPressHandlerContactUs}
-            width={350}
-            height={50}
-          />
+          <Button
+            icon="information"
+            mode="elevated"
+            style={styles.buttonSize}
+            labelStyle={{fontSize: 18}}
+            onPress={onPressHandlerAbout}>
+            About Us
+          </Button>
+          <Button
+            icon="contacts"
+            mode="elevated"
+            style={styles.buttonSize}
+            labelStyle={{fontSize: 18}}
+            onPress={onPressHandlerContactUs}>
+            Contact Us
+          </Button>
         </View>
       </View>
     </View>
@@ -145,6 +150,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'center',
+  },
+  buttonSize: {
+    height: 60,
+    width: 200,
+    borderRadius: 30,
+    padding: 10,
   },
   textImageDescription: {
     fontSize: 20,

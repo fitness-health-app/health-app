@@ -4,15 +4,11 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
   Modal,
-  // TextInput,
-  TouchableOpacity,
 } from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button, Text} from 'react-native-paper';
 
 import CustomTrackingBlock from '../components/CustomTrackingBlock';
-import CustomButtons from '../components/CustomButtons';
 
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
@@ -26,18 +22,6 @@ const Log = ({navigation}) => {
     backgroundColor: isDarkMode
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
-  };
-  const titleTextColor = {
-    color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
-  };
-
-  const viewBackgroundColor = {
-    backgroundColor: isDarkMode
-      ? styles.backgroundViewColor.dark
-      : styles.backgroundViewColor.light,
-  };
-  const viewTextColor = {
-    color: isDarkMode ? styles.textColor.dark : styles.textColor.dark,
   };
 
   const onPressHandleNutrition = () => {
@@ -58,10 +42,10 @@ const Log = ({navigation}) => {
   return (
     <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[titleTextColor, styles.textTitle]}>Track</Text>
+        <Text variant="headlineLarge">Track</Text>
       </View>
       <View style={[styles.viewSectionTitle]}>
-        <Text style={[styles.textSectionTitle, titleTextColor]}>Food</Text>
+        <Text variant="headlineMedium">Food</Text>
       </View>
       {foodTrackList.map(item => (
         <View key={item.id}>
@@ -72,14 +56,14 @@ const Log = ({navigation}) => {
         </View>
       ))}
       <View style={[styles.viewSectionTitle]}>
-        <Text style={[styles.textSectionTitle, titleTextColor]}>Exercise</Text>
+        <Text variant="headlineMedium">Exercise</Text>
       </View>
       <CustomTrackingBlock
         blockLabel={'Workouts'}
         onPressHandleFunction={onPressHandleFitness}
       />
       <View style={[styles.viewSectionTitle]}>
-        <Text style={[styles.textSectionTitle, titleTextColor]}>Health</Text>
+        <Text variant="headlineMedium">Health</Text>
       </View>
       <CustomTrackingBlock
         blockLabel={'Weight'}
@@ -94,9 +78,7 @@ const Log = ({navigation}) => {
         }}>
         <View style={[styles.modal, backgroundStyle]}>
           <View style={[styles.modalContent, backgroundStyle]}>
-            <Text style={[styles.textSectionTitle, titleTextColor]}>
-              Add Weight
-            </Text>
+            <Text variant="headlineMedium">Add Weight</Text>
             <View
               style={{
                 flex: 1,
@@ -106,7 +88,7 @@ const Log = ({navigation}) => {
                 alignItems: 'center',
               }}>
               <TextInput
-                label="WEIGHT"
+                label="Weight"
                 keyboardType="numeric"
                 value={userWeight}
                 onChangeText={inputText => setUserWeight(inputText.trimStart())}

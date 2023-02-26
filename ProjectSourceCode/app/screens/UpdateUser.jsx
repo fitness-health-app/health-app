@@ -2,12 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   ScrollView,
-  Text,
   StyleSheet,
   useColorScheme,
-  TextInput,
   TouchableHighlight,
 } from 'react-native';
+import {Button, TextInput, Text} from 'react-native-paper';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -86,35 +85,24 @@ const UpdateUser = ({navigation}) => {
 
   return (
     <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
-      <View style={[styles.viewBody, backgroundStyle]}>
-        <View style={styles.viewTitleRow}>
-          <Text style={[textColorStyle, styles.textTitle]}>Update User</Text>
-        </View>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View>
-            <Text style={[styles.updateText, secondaryTextColorStyle]}>
-              Name
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={setName}
-              value={name}
-              placeholder="NAME"
-              color={isDarkMode ? '#d3d8dd' : '#00155F'}
-              underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-              placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-            />
-          </View>
-        </View>
-        <View style={{flex: 2, padding: 20}}>
-          <CustomButtons
-            buttonText={'Submit'}
-            onPressHandleFunction={updateAndStoreData}
-            width={200}
-            height={50}
-          />
-        </View>
+      <View style={styles.viewHeading}>
+        <Text variant="headlineLarge">Update User</Text>
       </View>
+      <View style={styles.container}>
+        <TextInput
+          label="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+          mode="outlined"
+          style={styles.input}
+        />
+      </View>
+      <Button
+        mode="contained"
+        onPress={updateAndStoreData}
+        style={styles.button}>
+        Update
+      </Button>
     </ScrollView>
   );
 };
@@ -122,35 +110,27 @@ const UpdateUser = ({navigation}) => {
 const styles = StyleSheet.create({
   scrollViewBody: {
     flex: 1,
-    flexDirection: 'column',
     padding: 10,
   },
-  viewBody: {
+  viewHeading: {
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    padding: 10,
+    marginTop: 10,
+    padding: 25,
   },
-  viewTitleRow: {
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: 16,
   },
-  textTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    padding: 2,
+  input: {
+    width: '100%',
+    marginBottom: 16,
   },
-  textInput: {
-    width: 300,
-    margin: 8,
-    padding: 10,
-  },
-  updateText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 20,
+  button: {
+    marginTop: 5,
+    marginLeft: 15,
+    width: '45%',
   },
 });
 

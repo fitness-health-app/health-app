@@ -1,15 +1,8 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  useColorScheme,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, useColorScheme, TouchableOpacity} from 'react-native';
+import {Button, TextInput, Text} from 'react-native-paper';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
-import CustomButtons from '../components/CustomButtons';
 import {
   validateName,
   validateEmail,
@@ -83,82 +76,69 @@ const Signup = ({navigation}) => {
 
   return (
     <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
-      <View style={[styles.viewBody]}>
-        <View style={styles.viewTitleRow}>
-          <Text style={[textColorStyle, styles.textTitle]}>Sign Up</Text>
+      <View style={styles.viewHeading}>
+        <Text variant="headlineLarge">Sign Up</Text>
+      </View>
+      <View style={styles.container}>
+        <TextInput
+          label="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+          mode="outlined"
+          style={styles.input}
+        />
+        <TextInput
+          label="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          mode="outlined"
+          style={styles.input}
+        />
+        <TextInput
+          label="Password"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          mode="outlined"
+          secureTextEntry={secureTextEntry}
+          style={styles.input}
+        />
+        <TextInput
+          label="Confirm Password"
+          value={passwordConfirm}
+          onChangeText={text => setPasswordConfirm(text)}
+          mode="outlined"
+          secureTextEntry={secureTextEntry}
+          style={styles.input}
+        />
+        <View style={{marginTop: 15, marginBottom: 35}}>
+          <TouchableOpacity onPress={toggleSecureTextEntry}>
+            <Text style={[textColorStyle]}>
+              {secureTextEntry ? 'Show' : 'Hide'} password
+            </Text>
+          </TouchableOpacity>
         </View>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={inputText => setName(inputText.trimStart())}
-            value={name}
-            maxLength={15}
-            placeholder="NAME"
-            color={isDarkMode ? '#d3d8dd' : '#00155F'}
-            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={inputText => setEmail(inputText.trim())}
-            value={email}
-            placeholder="EMAIL ADDRESS"
-            color={isDarkMode ? '#d3d8dd' : '#00155F'}
-            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={inputText => setPassword(inputText.trim())}
-            value={password}
-            maxLength={15}
-            placeholder="PASSWORD"
-            color={isDarkMode ? '#d3d8dd' : '#00155F'}
-            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-            secureTextEntry={secureTextEntry}
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={inputText => setPasswordConfirm(inputText.trim())}
-            value={passwordConfirm}
-            maxLength={15}
-            placeholder="CONFIRM PASSWORD"
-            color={isDarkMode ? '#d3d8dd' : '#00155F'}
-            underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-            placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-            secureTextEntry={secureTextEntry}
-          />
-          <View style={{marginTop: 5, marginBottom: 35}}>
-            <TouchableOpacity onPress={toggleSecureTextEntry}>
-              <Text style={[textColorStyle]}>
-                {secureTextEntry ? 'Show' : 'Hide'} password
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <CustomButtons
-            buttonText={'Sign Up'}
-            onPressHandleFunction={loginAndStoreData}
-            width={200}
-            height={50}
-          />
-        </View>
-        <View style={styles.viewAlternateLogin}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              padding: 20,
-            }}>
-            <TouchableHighlight
-              onPress={onPressHandlerLogin}
-              underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
-              <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
-                Already have an account? Sign In!
-              </Text>
-            </TouchableHighlight>
-          </View>
+        <Button
+          mode="contained"
+          onPress={loginAndStoreData}
+          style={styles.button}>
+          Sign Up
+        </Button>
+      </View>
+      <View style={styles.viewAlternateLogin}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            padding: 20,
+          }}>
+          <TouchableOpacity
+            onPress={onPressHandlerLogin}
+            underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
+            <Text variant="bodyLarge" style={[{color: '#f79700'}]}>
+              Already have an account? Sign In!
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -168,39 +148,25 @@ const Signup = ({navigation}) => {
 const styles = StyleSheet.create({
   scrollViewBody: {
     flex: 1,
-    flexDirection: 'column',
     padding: 10,
   },
-  viewBody: {
-    flexDirection: 'column',
+  viewHeading: {
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    marginTop: 10,
+    padding: 25,
   },
-  viewTitleRow: {
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  viewAlternateLogin: {
-    flex: 2,
-    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
   },
-  textTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    padding: 2,
+  input: {
+    width: '100%',
+    marginBottom: 16,
   },
-  textInput: {
-    width: 300,
-    margin: 8,
-    padding: 10,
-  },
-  textAlternateLogin: {
-    fontWeight: 'bold',
-    fontSize: 18,
+  button: {
+    width: '100%',
   },
 });
 

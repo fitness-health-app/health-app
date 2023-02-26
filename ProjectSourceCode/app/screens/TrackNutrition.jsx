@@ -1,5 +1,6 @@
 import React from 'react';
-import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
 
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
@@ -18,7 +19,7 @@ const TrackNutrition = () => {
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[textColorStyle, styles.textTitle]}>Search Food</Text>
+        <Text variant='headlineLarge'>Search Food</Text>
       </View>
     </View>
   );
