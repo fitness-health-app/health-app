@@ -1,17 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
-  TouchableHighlight,
-} from 'react-native';
+import {View, ScrollView, StyleSheet, useColorScheme} from 'react-native';
 import {Button, TextInput, Text} from 'react-native-paper';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
-import CustomButtons from '../components/CustomButtons';
+import {backgroundThemeColor} from '../styles/globalStyles';
 import {currentUserState} from '../atoms/users';
 import {API_URL} from '../config';
 
@@ -21,12 +14,6 @@ const UpdateUser = ({navigation}) => {
     backgroundColor: isDarkMode
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
-  };
-  const textColorStyle = {
-    color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
-  };
-  const secondaryTextColorStyle = {
-    color: isDarkMode ? themeTextColor.light : '#757575',
   };
   const currentUser = useRecoilValue(currentUserState);
   const setCurrentUser = useSetRecoilState(currentUserState);
