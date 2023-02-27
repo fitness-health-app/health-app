@@ -24,6 +24,10 @@ type Config struct {
 	RefreshTokenExpiresIn  time.Duration `mapstructure:"REFRESH_TOKEN_EXPIRED_IN"`
 	AccessTokenMaxAge      int           `mapstructure:"ACCESS_TOKEN_MAXAGE"`
 	RefreshTokenMaxAge     int           `mapstructure:"REFRESH_TOKEN_MAXAGE"`
+
+	FoodApiURL string `mapstructure:"FOOD_API_URL"`
+	FoodApiID  string `mapstructure:"FOOD_API_ID"`
+	FoodApiKey string `mapstructure:"FOOD_API_KEY"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
