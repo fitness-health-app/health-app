@@ -29,11 +29,13 @@ pipeline {
             steps {
                 mail( bcc: '', body: '''
                 
+                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+                
                 ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}
                 
-                ''', cc: '', from: '', replyTo: '', subject: 'New Build Created ', to: 'tarundagar2001@gmail.com'
+                ''', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:', to: 'tarundagar2001@gmail.com'
                      )
             }
         }
