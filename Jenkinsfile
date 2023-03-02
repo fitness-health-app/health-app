@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Fetch') {
             steps {
-                sh 'sudo python3 /home/ubuntu/JenkinsAutomation/fetchBuil.py'
+                sh 'sudo python3 /home/ubuntu/JenkinsAutomation/fetchBuild.py'
             }
         }
         stage('Build') {
