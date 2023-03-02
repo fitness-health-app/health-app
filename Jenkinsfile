@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Send Email Notification') {
             steps {
-                mail body: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}", cc: '', from: '', replyTo: '', subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to: 'tarundagar2001@gmail.com'
+                mail body: " ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}", cc: '', from: '', replyTo: '', subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to: 'tarundagar2001@gmail.com'
                      
             }
         }
