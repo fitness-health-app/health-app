@@ -25,5 +25,17 @@ pipeline {
                 sh 'sudo python3 /home/ubuntu/JenkinsAutomation/testBuild.py'
             }
         }
+        stage('Send Email Notification') {
+            steps {
+                mail( bcc: '', body: '''Hi,
+
+                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+                Check console output at $BUILD_URL to view the results.
+
+                ''', cc: '', from: '', replyTo: '', subject: 'New Build Created ', to: 'tarundagar2001@gmail.com'
+                     )
+            }
+        }
     }
 }
