@@ -35,7 +35,7 @@ pipeline {
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}
                 
-                ''', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:', to: 'tarundagar2001@gmail.com'
+                ''', cc: '', from: '', replyTo: '', subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}', to: 'tarundagar2001@gmail.com'
                      )
             }
         }
