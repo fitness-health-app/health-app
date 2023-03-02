@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'sudo python3 /home/ubuntu/JenkinsAutomation/deployBuild.py'
+                sh 'sudo python3 /home/ubuntu/JenkinsAutomation/deployBuil.py'
             }
         }
         stage('Test') {
