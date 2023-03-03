@@ -318,7 +318,6 @@ const TrackNutrition = () => {
     setModalVisible(false);
   };
 
-  console.log({currentFoodMacro});
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
