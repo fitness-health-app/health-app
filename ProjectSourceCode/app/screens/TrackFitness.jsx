@@ -1,8 +1,10 @@
 import React from 'react';
-import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
-const Tasks = () => {
+const TrackFitness = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -17,8 +19,7 @@ const Tasks = () => {
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[textColorStyle, styles.textTitle]}>Tasks
-      </Text>
+        <Text variant="headlineLarge">Search Workout</Text>
       </View>
     </View>
   );
@@ -39,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Tasks;
+export default TrackFitness;

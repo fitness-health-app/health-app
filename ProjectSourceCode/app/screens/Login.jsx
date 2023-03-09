@@ -1,23 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  useColorScheme,
-  TextInput,
-  TouchableHighlight,
-} from 'react-native';
+import {View, StyleSheet, useColorScheme, TouchableOpacity} from 'react-native';
+import {Button, TextInput, Text} from 'react-native-paper';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
-import CustomButtons from '../components/CustomButtons';
 import {currentUserState} from '../atoms/users';
 import {
   validateEmail,
   validatePassword,
   invalidLogin,
 } from '../utils/validations';
+import {API_URL} from '../config';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Login = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -32,19 +27,19 @@ const Login = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({access_token: null, status: null});
   const [stateUpdate, setStateUpdate] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
   const currentUser = useRecoilValue(currentUserState);
   const setCurrentUser = useSetRecoilState(currentUserState);
 
   const loginAndStoreData = () => {
     if (validateEmail(email) && validatePassword(password)) {
-      setIsLoading(true);
-      fetch('http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/login', {
+      fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
@@ -62,7 +57,6 @@ const Login = ({navigation}) => {
             status: responseData.status,
           }));
         })
-        .then(setIsLoading(false))
         .catch(err => {
           invalidLogin();
           console.log(err.message);
@@ -127,108 +121,95 @@ const Login = ({navigation}) => {
   const onPressHandlerSignup = () => {
     navigation.navigate('Signup');
   };
-  // const onPressHandlerGoogle = () => {
-  //   console.log('Login with Google');
-  // };
+
+  const toggleSecureTextEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
 
   return (
-    <View style={[styles.viewBody, backgroundStyle]}>
-      <View style={styles.viewTitleRow}>
-        <Text style={[textColorStyle, styles.textTitle]}>Login</Text>
+    <ScrollView style={[styles.scrollViewBody, backgroundStyle]}>
+      <View style={styles.viewHeading}>
+        <Text variant="headlineLarge">Login</Text>
       </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.container}>
         <TextInput
-          style={styles.textInput}
-          onChangeText={setEmail}
+          label="Email"
           value={email}
-          placeholder="EMAIL ADDRESS"
-          color={isDarkMode ? '#d3d8dd' : '#00155F'}
-          underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-          placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
+          onChangeText={text => setEmail(text)}
+          mode="outlined"
+          style={styles.input}
         />
         <TextInput
-          style={styles.textInput}
-          onChangeText={setPassword}
+          label="Password"
           value={password}
-          placeholder="PASSWORD"
-          color={isDarkMode ? '#d3d8dd' : '#00155F'}
-          underlineColorAndroid={isDarkMode ? '#FFFFFF' : '#00155F'}
-          placeholderTextColor={isDarkMode ? '#d3d8dd' : '#00155F'}
-          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          mode="outlined"
+          secureTextEntry={secureTextEntry}
+          style={styles.input}
         />
-        <CustomButtons
-          buttonText={'Sign In'}
-          onPressHandleFunction={loginAndStoreData}
-          width={200}
-          height={50}
-        />
+        <View style={{marginTop: 15, marginBottom: 35}}>
+          <TouchableOpacity onPress={toggleSecureTextEntry}>
+            <Text style={[textColorStyle]}>
+              {secureTextEntry ? 'Show' : 'Hide'} password
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Button
+          mode="contained"
+          onPress={loginAndStoreData}
+          style={styles.button}>
+          Login
+        </Button>
       </View>
-      <View style={styles.viewAlternateLogin}>
+      <View style={styles.viewSignupContainer}>
         <View
           style={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'space-around',
+            padding: 30,
           }}>
-          {/* <View style={{padding: 5}}>
-            <Text style={[textColorStyle]}>-or-</Text>
-          </View>
-          <TouchableHighlight
-            onPress={onPressHandlerGoogle}
-            underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
-            <Text style={{color: '#FF0000', fontSize: 16, fontWeight: 'bold'}}>
-              Google+
-            </Text>
-          </TouchableHighlight> 
-          <Text style={[styles.textAlternateLogin, textColorStyle]}>
-            Forgot Password?
-          </Text> */}
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={onPressHandlerSignup}
             underlayColor={isDarkMode ? '#606163' : '#E8E8E8'}>
-            <Text style={[styles.textAlternateLogin, {color: '#f79700'}]}>
+            <Text variant="bodyLarge" style={[{color: '#f79700'}]}>
               Don't have an account? Sign up!
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  viewBody: {
+  scrollViewBody: {
     flex: 1,
     flexDirection: 'column',
+    padding: 10,
+  },
+  viewHeading: {
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    padding: 10,
+    marginTop: 10,
+    padding: 25,
   },
-  viewTitleRow: {
-    flex: 1,
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  viewAlternateLogin: {
+  viewSignupContainer: {
     flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
   },
-  textTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    padding: 2,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
   },
-  textInput: {
-    width: 300,
-    margin: 8,
-    padding: 10,
+  input: {
+    width: '100%',
+    marginBottom: 16,
   },
-  textAlternateLogin: {
-    fontWeight: 'bold',
-    fontSize: 18,
+  button: {
+    width: '100%',
   },
 });
 

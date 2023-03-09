@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e0116896-2ce9-4915-ae18-193e0cf849e5",
+		"_postman_id": "f73c6acf-5ccb-48e8-b527-f6c59732e9ba",
 		"name": "Health App Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20820258"
@@ -180,6 +180,43 @@
 								"api",
 								"users",
 								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Food",
+			"item": [
+				{
+					"name": "List Food",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/food/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"food",
+								"list"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "cheese",
+									"disabled": true
+								}
 							]
 						}
 					},

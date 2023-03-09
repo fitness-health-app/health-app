@@ -1,5 +1,7 @@
 import React from 'react';
-import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
+
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 
 const Statistics = () => {
@@ -17,7 +19,7 @@ const Statistics = () => {
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[textColorStyle, styles.textTitle]}>Statistics</Text>
+        <Text variant='headlineLarge'>Statistics</Text>
       </View>
     </View>
   );

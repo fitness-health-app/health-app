@@ -10,6 +10,8 @@ import 'react-native-gesture-handler';
 
 import React, {useState, useEffect} from 'react';
 import {RecoilRoot} from 'recoil';
+import {Provider as PaperProvider} from 'react-native-paper';
+
 import AppStack from './AppStack';
 import Splash from './screens/Splash';
 
@@ -22,7 +24,11 @@ const App = () => {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
-  return <RecoilRoot>{isInit ? <Splash /> : <AppStack />}</RecoilRoot>;
+  return (
+    <RecoilRoot>
+      <PaperProvider>{isInit ? <Splash /> : <AppStack />}</PaperProvider>
+    </RecoilRoot>
+  );
 };
 
 export default App;

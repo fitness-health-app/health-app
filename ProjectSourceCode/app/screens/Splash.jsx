@@ -1,5 +1,6 @@
 import React from 'react';
-import {useColorScheme, StyleSheet, View, Text, Image} from 'react-native';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
 
 const Splash = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -13,7 +14,7 @@ const Splash = () => {
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={{justifyContent: 'space-around'}}>
-        <Text style={[styles.text]}>Health App</Text>
+        <Text variant="displayLarge">Health App</Text>
       </View>
     </View>
   );

@@ -1,12 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {useColorScheme, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {useColorScheme, StyleSheet, View} from 'react-native';
+import {
+  Avatar,
+  Button,
+  Title,
+  Text,
+  Divider,
+} from 'react-native-paper';
+
 import {useRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
 import {currentUserState} from '../atoms/users';
-import CustomButtons from '../components/CustomButtons';
+import {API_URL} from '../config';
 
 const Settings = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,12 +23,6 @@ const Settings = ({navigation}) => {
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
   };
-  const textColorStyle = {
-    color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
-  };
-  const secondaryTextColorStyle = {
-    color: isDarkMode ? themeTextColor.light : '#757575',
-  };
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
   const onPressHandleUpdateUser = () => {
@@ -29,7 +30,7 @@ const Settings = ({navigation}) => {
   };
 
   const logoutAndClearStorage = () => {
-    API = 'http://ec2-54-210-125-9.compute-1.amazonaws.com/api/auth/logout';
+    API = `${API_URL}/api/auth/logout`;
     const options = {
       method: 'GET',
       headers: {
@@ -68,79 +69,92 @@ const Settings = ({navigation}) => {
     }));
     removeValue();
   };
+  const initials = currentUser.name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('');
 
   return (
-    <View style={[styles.body, backgroundStyle]}>
+    <View style={[styles.container, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text style={[textColorStyle, styles.textTitle]}>Settings</Text>
+        <Text variant="headlineLarge">Settings</Text>
       </View>
-      <View
-        style={{
-          flexDirection: 'column',
-          paddingTop: 5,
-          paddingLeft: 15,
-        }}>
-        <View style={{padding: 10}}>
-          <FontAwesome5 name="user-circle" size={80} />
+      <View style={styles.avatarContainer}>
+        <Avatar.Text label={initials} size={64} />
+        <Title style={styles.avatarText}>{currentUser.name}</Title>
+      </View>
+      <Divider />
+      <View style={[styles.viewDetailsContainer]}>
+        <View style={[styles.viewTextTitle]}>
+          <Text variant="titleLarge">Name</Text>
+          <Text variant="bodyMedium">{currentUser.name}</Text>
         </View>
-        <View
-          style={{
-            padding: 5,
-            borderBottomColor: 'black',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
-        <View style={[styles.viewTextAlignment]}>
-          <View>
-            <Text style={[secondaryTextColorStyle]}>Name</Text>
-            <Text style={[textColorStyle]}>{currentUser.name}</Text>
-          </View>
-          <View style={[styles.viewTextAlignment]}>
-            <Text style={[secondaryTextColorStyle]}>Email</Text>
-            <Text style={[textColorStyle]}>{currentUser.email}</Text>
-          </View>
-          <View style={[styles.viewTextAlignment]}>
-            <Text style={[secondaryTextColorStyle]}>ID</Text>
-            <Text style={[textColorStyle]}>{currentUser.id}</Text>
-          </View>
-          <View style={[styles.viewTextAlignment]}>
-            <CustomButtons
-              buttonText={'Update'}
-              onPressHandleFunction={onPressHandleUpdateUser}
-              width={200}
-              height={50}
-            />
-          </View>
-          <View style={[styles.viewTextAlignment]}>
-            <CustomButtons
-              buttonText={'Logout'}
-              onPressHandleFunction={logoutAndClearStorage}
-              width={200}
-              height={50}
-            />
-          </View>
+        <View style={[styles.viewTextTitle]}>
+          <Text variant="titleLarge">Email</Text>
+          <Text variant="bodyMedium">{currentUser.email}</Text>
         </View>
+        <View style={[styles.viewTextTitle]}>
+          <Text variant="titleLarge">ID</Text>
+          <Text variant="bodyMedium">{currentUser.id}</Text>
+        </View>
+      </View>
+      <View style={[styles.viewButtonsContainer]}>
+        <Button
+          mode="contained"
+          onPress={onPressHandleUpdateUser}
+          style={styles.button}>
+          Update
+        </Button>
+        <Button
+          mode="contained"
+          onPress={logoutAndClearStorage}
+          style={styles.button}>
+          Logout
+        </Button>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body: {
+  container: {
     flex: 1,
+    padding: 16,
   },
   viewHeading: {
     alignItems: 'center',
-    padding: 25,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  avatarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  avatarText: {
+    marginLeft: 16,
+  },
+  viewTextTitle: {
+    marginTop: 15,
+  },
+  viewButtonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  viewDetailsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 10,
   },
   textTitle: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
-    padding: 2,
   },
-  viewTextAlignment: {
-    paddingTop: 25,
-    justifyContent: 'space-evenly',
+  button: {
+    marginTop: 20,
+    width: '45%',
+    height: '15%',
   },
 });
 

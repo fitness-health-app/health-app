@@ -37,7 +37,7 @@ const CustomButtons = ({
   const textColor = customButtonTextColor ? customTextColor : defaultTextColor;
   return (
     <View>
-      <TouchableHighlight activeOpacity={0.6} onPress={onPressHandleFunction}>
+      <TouchableHighlight onPress={onPressHandleFunction}>
         <View
           style={[
             styles.viewTouchable,

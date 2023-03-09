@@ -5,9 +5,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Dashboard from '../screens/Dashboard';
 import Statistics from '../screens/Statistics';
-import Tasks from '../screens/Tasks';
+import Log from '../screens/Log';
+import StackNavigatorLog from './StackNavigatorLog';
 import StackNavigatorSettings from './StackNavigatorSettings';
-
 import Settings from '../screens/Settings';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -33,22 +33,22 @@ const BottomTabNavigation = () => {
         }}
       />
       <Tab.Screen
+        name="StackNavigatorLog"
+        component={StackNavigatorLog}
+        options={{
+          tabBarLabel: 'Log',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="list-ul" size={22} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Statistics"
         component={Statistics}
         options={{
           tabBarLabel: 'Statistics',
           tabBarIcon: ({color}) => (
             <FontAwesome5 name="chart-line" size={22} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Tasks"
-        component={Tasks}
-        options={{
-          tabBarLabel: 'Tasks',
-          tabBarIcon: ({color}) => (
-            <FontAwesome5 name="list-ul" size={22} color={color} />
           ),
         }}
       />
