@@ -2,7 +2,9 @@ import React from 'react';
 import {useColorScheme, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
-import {backgroundThemeColor, themeTextColor} from '../styles/globalStyles';
+import CustomLineChart from '../components/CustomLineChart'
+
+import {backgroundThemeColor} from '../styles/globalStyles';
 
 const Statistics = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -12,14 +14,16 @@ const Statistics = () => {
       ? backgroundThemeColor.dark
       : backgroundThemeColor.light,
   };
-  const textColorStyle = {
-    color: isDarkMode ? themeTextColor.light : themeTextColor.dark,
+
+  const backgroundColorChart = {
+    backgroundColor: isDarkMode ? '#bcbcbc' : '#f3f6f4',
   };
 
   return (
     <View style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
-        <Text variant='headlineLarge'>Statistics</Text>
+        <Text variant="headlineLarge">Statistics</Text>
+        <CustomLineChart chartTitle='Calories' />
       </View>
     </View>
   );
