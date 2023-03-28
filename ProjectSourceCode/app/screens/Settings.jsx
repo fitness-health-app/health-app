@@ -1,12 +1,6 @@
 import React from 'react';
 import {useColorScheme, StyleSheet, View} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Title,
-  Text,
-  Divider,
-} from 'react-native-paper';
+import {Avatar, Button, Title, Text, Divider} from 'react-native-paper';
 
 import {useRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,7 +24,7 @@ const Settings = ({navigation}) => {
   };
 
   const logoutAndClearStorage = () => {
-    API = `${API_URL}/api/auth/logout`;
+    const API = `${API_URL}/api/auth/logout`;
     const options = {
       method: 'GET',
       headers: {

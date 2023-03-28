@@ -290,7 +290,7 @@ const TrackNutrition = () => {
   };
 
   const onPressSearchFood = () => {
-    API = `${API_URL}/api/food/list?limit=10&search=${searchQuery}`;
+    const API = `${API_URL}/api/food/list?limit=10&search=${searchQuery}`;
     const options = {
       method: 'GET',
       headers: {

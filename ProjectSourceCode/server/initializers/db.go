@@ -142,16 +142,42 @@ func InsertNutrientsData(config *Config) {
 	}
 }
 
+type ExerciseResponse struct {
+	BodyPart  string `json:"bodyPart"`
+	Equipment string `json:"equipment"`
+	GifURL    string `json:"gifUrl"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Target    string `json:"target"`
+}
+
 func getExercises() ([]models.Exercise, error) {
 	byteValue, err := getDataFromFile("excercise-data.json")
 	if err != nil {
 		return nil, err
 	}
 
-	var exercises []models.Exercise
-	err = json.Unmarshal(byteValue, &exercises)
+	var exercisesResponse []ExerciseResponse
+	err = json.Unmarshal(byteValue, &exercisesResponse)
 	if err != nil {
 		return nil, err
+	}
+
+	exercises := []models.Exercise{}
+	for idx := range exercisesResponse {
+		if idx%130 == 0 {
+			log.Println("Loading inserting exercises...")
+			time.Sleep(time.Second)
+		}
+
+		ex := exercisesResponse[idx]
+		exercises = append(exercises, models.Exercise{
+			Name:      ex.Name,
+			BodyPart:  ex.BodyPart,
+			Equipment: ex.Equipment,
+			ImageURL:  ex.GifURL,
+			Target:    ex.Target,
+		})
 	}
 
 	return exercises, nil

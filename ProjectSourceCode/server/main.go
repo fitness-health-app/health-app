@@ -21,6 +21,9 @@ var (
 
 	FoodController      controllers.FoodController
 	FoodRouteController routes.FoodRouteController
+
+	ExerciseController      controllers.ExerciseController
+	ExerciseRouteController routes.ExerciseRouteController
 )
 
 func init() {
@@ -39,6 +42,9 @@ func init() {
 
 	FoodController = controllers.NewFoodController(initializers.DB)
 	FoodRouteController = routes.NewFoodRouteController(FoodController)
+
+	ExerciseController = controllers.NewExerciseController(initializers.DB)
+	ExerciseRouteController = routes.NewExerciseRouteController(ExerciseController)
 
 	server = gin.Default()
 }
@@ -64,5 +70,6 @@ func main() {
 	AuthRouteController.AuthRoute(router)
 	UserRouteController.UserRoute(router)
 	FoodRouteController.FoodRoute(router)
+	ExerciseRouteController.ExerciseRoute(router)
 	log.Fatal(server.Run(":" + config.ServerPort))
 }

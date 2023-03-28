@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f73c6acf-5ccb-48e8-b527-f6c59732e9ba",
+		"_postman_id": "95cd4a5b-36a7-4266-b324-90b95b71509e",
 		"name": "Health App Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20820258"
@@ -215,6 +215,53 @@
 								{
 									"key": "search",
 									"value": "cheese",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exercise",
+			"item": [
+				{
+					"name": "List Exercise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/exercise/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"exercise",
+								"list"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "sit-up",
+									"disabled": true
+								},
+								{
+									"key": "target",
+									"value": "lats",
+									"disabled": true
+								},
+								{
+									"key": "bodyPart",
+									"value": "waist",
 									"disabled": true
 								}
 							]

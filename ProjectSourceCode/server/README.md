@@ -47,4 +47,48 @@ At this time, you have a RESTful API server running at `http://127.0.0.1:8000`. 
 ### Food
 * `GET /api/food/list`: list food on system `query params: limit and search`
 
+### Exercise
+* `GET /api/exercise/list`: list exercise on system `query params: target, bodyPart, limit and search`
+
+Targets:
+```
+{
+    "abductors",
+    "abs",
+    "adductors",
+    "biceps",
+    "calves",
+    "cardiovascular system",
+    "delts",
+    "forearms",
+    "glutes",
+    "hamstrings",
+    "lats",
+    "levator scapulae",
+    "pectorals",
+    "quads",
+    "serratus anterior",
+    "spine",
+    "traps",
+    "triceps",
+    "upper back",
+}
+```
+
+Body Parts:
+```
+{
+    "back",
+    "cardio",
+    "chest",
+    "lower arms",
+    "lower legs",
+    "neck",
+    "shoulders",
+    "upper arms",
+    "upper legs",
+    "waist",
+}
+```
+
 If you are using Postman as your API testing tool then import this file [Postman Collection JSON](HealthAppBackend.postman_collection.json)

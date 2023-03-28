@@ -7,6 +7,8 @@ import {useRecoilState, useRecoilValue} from 'recoil';
 
 import {currentUserState} from '../atoms/users';
 import {totalFoodMacro} from '../atoms/food';
+import {totalExericesCalBurnt} from '../atoms/exercise';
+
 import {backgroundThemeColor} from '../styles/globalStyles';
 
 import {API_URL} from '../config';
@@ -42,6 +44,7 @@ const Dashboard = () => {
 
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const currentFoodMacro = useRecoilValue(totalFoodMacro);
+  const currentExericesCalBurnt = useRecoilValue(totalExericesCalBurnt);
 
   useEffect(() => {
     const dateFormat = new Date().toLocaleDateString();
@@ -54,7 +57,7 @@ const Dashboard = () => {
       day: dayOfWeek,
     }));
 
-    API = `${API_URL}/api/users/me`;
+    const API = `${API_URL}/api/users/me`;
     const options = {
       method: 'GET',
       headers: {
@@ -175,7 +178,38 @@ const Dashboard = () => {
           </View>
         </View>
       )}
-      <Divider />
+      <Divider horizontalInset={true} bold={true} />
+      {currentExericesCalBurnt && (
+        <View style={{padding: 20}}>
+          <View>
+            <Text variant="titleLarge" style={{fontWeight: 'bold'}}>
+              Workout
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
+            <Text variant="titleLarge">Calories Burned: </Text>
+            <Text variant="titleMedium">
+              {currentExericesCalBurnt.caloriesBurned
+                ? currentExericesCalBurnt.caloriesBurned
+                : 0}
+            </Text>
+          </View>
+        </View>
+      )}
+      <Divider horizontalInset={true} bold={true} />
+      {currentExericesCalBurnt && currentFoodMacro && (
+        <View style={{padding: 20}}>
+          <View style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
+            <Text variant="titleLarge">Total Calories: </Text>
+            <Text variant="titleMedium">
+              {(currentFoodMacro.Calories ? currentFoodMacro.Calories : 0) -
+                (currentExericesCalBurnt.caloriesBurned
+                  ? currentExericesCalBurnt.caloriesBurned
+                  : 0)}
+            </Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
