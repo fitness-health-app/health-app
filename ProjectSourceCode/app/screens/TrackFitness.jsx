@@ -8,18 +8,28 @@ import {
   Image,
 } from 'react-native';
 import {Text, Searchbar, Button, Card, IconButton} from 'react-native-paper';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 
 import {currentUserState} from '../atoms/users';
-import {totalFoodMacro} from '../atoms/food';
+import {totalExericesCalBurnt} from '../atoms/exercise';
 import {API_URL} from '../config';
 
 import {backgroundThemeColor} from '../styles/globalStyles';
-import {EXERCISE_DATA} from '../utils/constants';
-import {toTitleCase} from '../utils/utils';
+import {toTitleCase, generateRandomCalories} from '../utils/utils';
 
-const AddExercise = ({visible, closeModal, data, backgroundStyle}) => {
+const AddExercise = ({
+  visible,
+  closeModal,
+  data,
+  backgroundStyle,
+  randomCalories,
+}) => {
   const [exerciseSetCount, setExerciseSetCount] = useState(0);
+  const [burntCalories, setBurntCalories] = useState(0);
+
+  const [exericesCalBurnt, setExericesCalBurnt] = useRecoilState(
+    totalExericesCalBurnt,
+  );
 
   const decrementSetCount = () => {
     setExerciseSetCount(exerciseSetCount - 1);
@@ -31,12 +41,38 @@ const AddExercise = ({visible, closeModal, data, backgroundStyle}) => {
 
   const handleClose = () => {
     setExerciseSetCount(0);
+    setBurntCalories(0);
     closeModal();
   };
 
   const clearData = () => {
     setExerciseSetCount(0);
+    setBurntCalories(0);
   };
+
+  const onAdd = () => {
+    if (burntCalories) {
+      if (exericesCalBurnt.caloriesBurned) {
+        setExericesCalBurnt(prevData => ({
+          ...prevData,
+          caloriesBurned:
+            Number(burntCalories) + Number(prevData.caloriesBurned),
+        }));
+      } else {
+        setExericesCalBurnt(prevData => ({
+          ...prevData,
+          caloriesBurned: Number(burntCalories),
+        }));
+      }
+    }
+    setExerciseSetCount(0);
+    setBurntCalories(0);
+    closeModal();
+  };
+
+  useEffect(() => {
+    setBurntCalories(Math.round(exerciseSetCount * randomCalories));
+  }, [exerciseSetCount]);
 
   if (!data) {
     return null;
@@ -71,29 +107,47 @@ const AddExercise = ({visible, closeModal, data, backgroundStyle}) => {
                   }}
                 />
               </View>
-              <Text variant="titleMedium">Add Number of Sets</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginLeft: 10,
-                }}>
-                <IconButton
-                  icon="minus"
-                  size={24}
-                  onPress={decrementSetCount}
-                  disabled={exerciseSetCount === 0}
-                />
-                <View style={{paddingHorizontal: 8}}>
-                  <Text>{exerciseSetCount}</Text>
+              <View style={{alignItems: 'center'}}>
+                <Text variant="titleMedium">Add Number of Sets</Text>
+                <Text variant="titleMediumSmall">1 Set = 15 Reps</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: 10,
+                  }}>
+                  <IconButton
+                    icon="minus"
+                    size={24}
+                    onPress={decrementSetCount}
+                    disabled={exerciseSetCount === 0}
+                  />
+                  <View style={{paddingHorizontal: 8}}>
+                    <Text>{exerciseSetCount}</Text>
+                  </View>
+                  <IconButton
+                    icon="plus"
+                    size={24}
+                    onPress={incrementSetCount}
+                  />
                 </View>
-                <IconButton icon="plus" size={24} onPress={incrementSetCount} />
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                marginBottom: 8,
+                alignItems: 'center',
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text variant="titleLarge">Calories Burned: </Text>
+                <Text variant="titleMedium">{burntCalories}</Text>
               </View>
             </View>
             <View style={[styles.viewButtonsContainer]}>
               <Button
                 mode="contained"
-                onPress={() => console.log('BUTTON')}
+                onPress={onAdd}
                 style={{
                   borderRadius: 20,
                 }}>
@@ -142,24 +196,27 @@ const TrackFitness = () => {
   };
 
   const onPressSearchExercise = () => {
-    // API = `${API_URL}/api/=${searchQuery}`;
-    // const options = {
-    //   method: 'GET',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${currentUser.access_token}`,
-    //   },
-    // };
-    // fetch(API, options)
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(res => setData(res))
-    //   .catch(err => {
-    //     console.log(err.message);
-    //   });
-    setData(EXERCISE_DATA);
+    const urlPattern =
+      searchQuery === ''
+        ? `/api/exercise/list?bodyPart=waist`
+        : `/api/exercise/list?bodyPart=${searchQuery}`;
+    const API = `${API_URL}${urlPattern}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.access_token}`,
+      },
+    };
+    fetch(API, options)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => setData(res))
+      .catch(err => {
+        console.log(err.message);
+      });
   };
 
   const handleOpenModal = item => {
@@ -221,6 +278,7 @@ const TrackFitness = () => {
               closeModal={handleCloseModal}
               data={modalData}
               backgroundStyle={backgroundStyle}
+              randomCalories={generateRandomCalories()}
             />
           )}
         </View>
@@ -240,6 +298,8 @@ const styles = StyleSheet.create({
   viewButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    padding: 10,
+    marginTop: 10,
   },
   textTitle: {
     fontSize: 25,
