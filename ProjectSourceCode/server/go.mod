@@ -7,7 +7,6 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.1.2
-	github.com/lib/pq v1.10.7
 	github.com/spf13/viper v1.12.0
 	golang.org/x/crypto v0.6.0
 	gorm.io/driver/postgres v1.4.5
@@ -16,6 +15,7 @@ require (
 
 require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/lib/pq v1.10.7 // indirect
 	gorm.io/driver/mysql v1.4.4 // indirect
 )
 

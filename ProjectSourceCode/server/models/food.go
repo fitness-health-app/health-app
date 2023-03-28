@@ -12,7 +12,7 @@ type Food struct {
 	ExternalID   string    `gorm:"unique;index"`
 	CreatedAt    time.Time `gorm:"not null"`
 	UpdatedAt    time.Time `gorm:"not null"`
-	Name         string    `gorm:"type:varchar(255);not null;indexç"`
+	Name         string    `gorm:"type:varchar(255);not null;index"`
 	ImageURL     string
 	Calories     float64
 	Protein      float64
