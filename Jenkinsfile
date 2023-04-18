@@ -47,7 +47,7 @@ pipeline {
         always {
                 mail body: "Hello Team,\n\n${currentBuild.currentResult}: Job ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild ID: ${env.BUILD_ID}\n\nMore info at: ${env.BUILD_URL}\n\n-Jenkins Team 4", cc: '', from: '', replyTo: '', subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to: 'tarundagar2001@gmail.com'   
                 jiraSendBuildInfo()
-                slackSend "Build Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                slackSend "Build Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
     }
 }
