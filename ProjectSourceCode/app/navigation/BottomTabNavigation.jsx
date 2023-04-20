@@ -4,10 +4,11 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Dashboard from '../screens/Dashboard';
-import Statistics from '../screens/Statistics';
+import Coach from '../screens/Coach';
 import Log from '../screens/Log';
 import StackNavigatorLog from './StackNavigatorLog';
 import StackNavigatorSettings from './StackNavigatorSettings';
+import StackNavigatorCoach from './StackNavigatorCoach';
 import Settings from '../screens/Settings';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -43,10 +44,10 @@ const BottomTabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Statistics"
-        component={Statistics}
+        name="StackNavigatorCoach"
+        component={StackNavigatorCoach}
         options={{
-          tabBarLabel: 'Statistics',
+          tabBarLabel: 'Coach',
           tabBarIcon: ({color}) => (
             <FontAwesome5 name="chart-line" size={22} color={color} />
           ),

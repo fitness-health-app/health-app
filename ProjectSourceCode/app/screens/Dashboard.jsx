@@ -3,11 +3,15 @@ import {useColorScheme, StyleSheet, View} from 'react-native';
 import {Text, Divider} from 'react-native-paper';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {constSelector, useRecoilState, useRecoilValue} from 'recoil';
+
+import DisplayCurrentDate from '../components/DisplayCurrentDate';
 
 import {currentUserState} from '../atoms/users';
 import {totalFoodMacro} from '../atoms/food';
 import {totalExericesCalBurnt} from '../atoms/exercise';
+import {scheduledSessionsState} from '../atoms/schedule';
+import {selectedCoachState} from '../atoms/coach';
 
 import {backgroundThemeColor} from '../styles/globalStyles';
 
@@ -15,15 +19,6 @@ import {API_URL} from '../config';
 
 const Dashboard = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const weekdays = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
 
   const backgroundStyle = {
     backgroundColor: isDarkMode
@@ -31,7 +26,6 @@ const Dashboard = () => {
       : backgroundThemeColor.light,
   };
 
-  const [currentDate, setCurrentDate] = useState(null);
   const [data, setData] = useState({
     id: null,
     name: null,
@@ -45,18 +39,10 @@ const Dashboard = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const currentFoodMacro = useRecoilValue(totalFoodMacro);
   const currentExericesCalBurnt = useRecoilValue(totalExericesCalBurnt);
+  const coach = useRecoilValue(selectedCoachState);
+  const scheduledSessions = useRecoilValue(scheduledSessionsState);
 
   useEffect(() => {
-    const dateFormat = new Date().toLocaleDateString();
-    const dateDay = new Date();
-    const dayOfWeek = weekdays[dateDay.getDay()]; // returns a string like "Monday"
-
-    setCurrentDate(prevData => ({
-      ...prevData,
-      date: dateFormat,
-      day: dayOfWeek,
-    }));
-
     const API = `${API_URL}/api/users/me`;
     const options = {
       method: 'GET',
@@ -115,16 +101,7 @@ const Dashboard = () => {
       <View style={styles.viewHeading}>
         <Text variant="headlineLarge">Dashboard</Text>
       </View>
-      <View style={{padding: 10}}>
-        <View style={{flexDirection: 'row'}}>
-          {currentDate && (
-            <Text variant="headlineSmall">{currentDate.day} - </Text>
-          )}
-          {currentDate && (
-            <Text variant="headlineSmall">{currentDate.date}</Text>
-          )}
-        </View>
-      </View>
+      <DisplayCurrentDate />
       {currentFoodMacro && (
         <View style={{padding: 20}}>
           <View>
@@ -210,6 +187,34 @@ const Dashboard = () => {
           </View>
         </View>
       )}
+      {coach && coach.length !== 0 && (
+        <View>
+          <Divider horizontalInset={true} bold={true} />
+          <View style={{padding: 20}}>
+            <View
+              style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
+              <Text variant="titleLarge">Your Coach: </Text>
+              <Text variant="titleMedium">{coach[0].name}</Text>
+            </View>
+          </View>
+        </View>
+      )}
+      {scheduledSessions &&
+        scheduledSessions.length !== 0 &&
+        scheduledSessions[scheduledSessions.length - 1].date && (
+          <View>
+            <Divider horizontalInset={true} bold={true} />
+            <View style={{padding: 20}}>
+              <View
+                style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
+                <Text variant="titleLarge">Next appointment: </Text>
+                <Text variant="titleMedium">
+                  {scheduledSessions[scheduledSessions.length - 1].date}
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
     </View>
   );
 };
