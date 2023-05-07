@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {useColorScheme, StyleSheet, View} from 'react-native';
-import {Text, Divider} from 'react-native-paper';
+import {useColorScheme, StyleSheet, View, Dimensions} from 'react-native';
+import {Text, Divider, List} from 'react-native-paper';
+import {PieChart, BarChart, ProgressChart} from 'react-native-chart-kit';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {constSelector, useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 
 import DisplayCurrentDate from '../components/DisplayCurrentDate';
 
@@ -12,10 +14,13 @@ import {totalFoodMacro} from '../atoms/food';
 import {totalExericesCalBurnt} from '../atoms/exercise';
 import {scheduledSessionsState} from '../atoms/schedule';
 import {selectedCoachState} from '../atoms/coach';
+import {userGoalsState} from '../atoms/userGoals';
 
 import {backgroundThemeColor} from '../styles/globalStyles';
+import {EXERCISE_DATA} from '../constants';
 
 import {API_URL} from '../config';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Dashboard = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -35,12 +40,14 @@ const Dashboard = () => {
     created_at: null,
     updated_at: null,
   });
+  const [exerciseData, setExerciseData] = useState(EXERCISE_DATA);
 
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const currentFoodMacro = useRecoilValue(totalFoodMacro);
   const currentExericesCalBurnt = useRecoilValue(totalExericesCalBurnt);
   const coach = useRecoilValue(selectedCoachState);
   const scheduledSessions = useRecoilValue(scheduledSessionsState);
+  const userGoals = useRecoilValue(userGoalsState);
 
   useEffect(() => {
     const API = `${API_URL}/api/users/me`;
@@ -71,6 +78,19 @@ const Dashboard = () => {
       .catch(err => {
         console.log(err.message);
       });
+    if (
+      currentExericesCalBurnt &&
+      currentExericesCalBurnt.caloriesBurned !== 0 &&
+      exerciseData.length === 7
+    ) {
+      const updatedExercises = [
+        ...exerciseData.pop(),
+        currentExericesCalBurnt.caloriesBurned,
+      ];
+      setExerciseData(updatedExercises);
+    } else {
+      setExerciseData([...exerciseData, 0]);
+    }
   }, []);
 
   useEffect(() => {
@@ -95,127 +115,242 @@ const Dashboard = () => {
     };
     storeData();
   }, [data]);
-
   return (
-    <View style={[styles.body, backgroundStyle]}>
+    <ScrollView style={[styles.body, backgroundStyle]}>
       <View style={styles.viewHeading}>
         <Text variant="headlineLarge">Dashboard</Text>
       </View>
       <DisplayCurrentDate />
-      {currentFoodMacro && (
-        <View style={{padding: 20}}>
-          <View>
-            <Text variant="titleLarge" style={{fontWeight: 'bold'}}>
-              Nutrition
-            </Text>
+
+      <List.Section>
+        <List.Subheader style={styles.subheader}>Nutrition</List.Subheader>
+        {currentFoodMacro && (
+          <>
+            <View style={styles.dataContainer}>
+              <View style={styles.dataItem}>
+                <MaterialCommunityIcons
+                  name="silverware-fork-knife"
+                  size={30}
+                  color={isDarkMode ? '#FFFFFF' : '#121212'}
+                />
+                <Text variant="titleLarge">Calories</Text>
+                <Text variant="titleMedium">
+                  {currentFoodMacro.Calories ? currentFoodMacro.Calories : 0}
+                </Text>
+              </View>
+            </View>
+            <ProgressChart
+              data={{
+                labels: ['g Protein', 'g Carbs', 'g Fat'],
+                data: [
+                  currentFoodMacro.Protein
+                    ? currentFoodMacro.Protein / userGoals.dailyProtein
+                    : 0,
+                  currentFoodMacro.Carbohydrate
+                    ? currentFoodMacro.Carbohydrate / userGoals.dailyCarbs
+                    : 0,
+                  currentFoodMacro.Fat
+                    ? currentFoodMacro.Fat / userGoals.dailyFat
+                    : 0,
+                ],
+              }}
+              width={Dimensions.get('window').width - 16}
+              height={220}
+              strokeWidth={16}
+              radius={32}
+              chartConfig={{
+                backgroundColor: isDarkMode ? '#1c1e21' : '#fff',
+                backgroundGradientFrom: isDarkMode ? '#1c1e21' : '#fff',
+                backgroundGradientTo: isDarkMode ? '#1c1e21' : '#fff',
+                color: (opacity = 1) =>
+                  isDarkMode
+                    ? `rgba(26, 255, 146, ${opacity})`
+                    : `rgba(26, 255, 146, ${opacity})`,
+                labelColor: (opacity = 1) =>
+                  isDarkMode
+                    ? `rgba(255, 255, 255, ${opacity})`
+                    : `rgba(0, 0, 0, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+              }}
+              hideLegend={false}
+            />
+          </>
+        )}
+      </List.Section>
+
+      <Divider />
+
+      <List.Section>
+        <List.Subheader style={styles.subheader}>Workout</List.Subheader>
+        {currentExericesCalBurnt && (
+          <>
+            <View style={styles.dataContainer}>
+              <View style={styles.dataItem}>
+                <MaterialCommunityIcons
+                  name="fire"
+                  size={30}
+                  color={isDarkMode ? '#FFFFFF' : '#121212'}
+                />
+                <Text variant="titleLarge">Calories Burned</Text>
+                <Text variant="titleMedium">
+                  {currentExericesCalBurnt.caloriesBurned
+                    ? currentExericesCalBurnt.caloriesBurned
+                    : 0}
+                </Text>
+              </View>
+            </View>
+            <BarChart
+              data={{
+                labels: [
+                  'Day 1',
+                  'Day 2',
+                  'Day 3',
+                  'Day 4',
+                  'Day 5',
+                  'Day 6',
+                  'Day 7',
+                ],
+                datasets: [
+                  {
+                    data: exerciseData,
+                  },
+                ],
+              }}
+              width={Dimensions.get('window').width - 16}
+              height={220}
+              chartConfig={{
+                backgroundColor: isDarkMode ? '#121212' : '#fff',
+                backgroundGradientFrom: isDarkMode ? '#121212' : '#fff',
+                backgroundGradientTo: isDarkMode ? '#121212' : '#fff',
+                color: (opacity = 1) =>
+                  isDarkMode
+                    ? `rgba(255, 255, 255, ${opacity})`
+                    : `rgba(0, 0, 0, ${opacity})`,
+              }}
+              style={{
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+            />
+          </>
+        )}
+      </List.Section>
+
+      <Divider />
+
+      <List.Section>
+        <List.Subheader style={styles.subheader}>User Goals</List.Subheader>
+        <View style={styles.dataContainer}>
+          <View style={styles.dataItem}>
+            <MaterialCommunityIcons
+              name="target"
+              size={30}
+              color={isDarkMode ? '#FFFFFF' : '#121212'}
+            />
+            <Text variant="titleLarge">Calories</Text>
+            <Text variant="titleMedium">{userGoals.dailyCalories}</Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              marginBottom: 10,
-              alignItems: 'center',
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <Text variant="titleLarge">Calories: </Text>
-              <Text variant="titleMedium">
-                {currentFoodMacro.Calories ? currentFoodMacro.Calories : 0}
-              </Text>
-            </View>
+          <View style={styles.dataItem}>
+            <MaterialCommunityIcons
+              name="target"
+              size={30}
+              color={isDarkMode ? '#FFFFFF' : '#121212'}
+            />
+            <Text variant="titleLarge">Protein</Text>
+            <Text variant="titleMedium">{userGoals.dailyProtein}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <View style={{flexDirection: 'row', marginBottom: 10}}>
-              <Text variant="titleLarge">Protein: </Text>
-              <Text variant="titleMedium">
-                {currentFoodMacro.Protein ? currentFoodMacro.Protein : 0}g
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', marginBottom: 10}}>
-              <Text variant="titleLarge">Fat: </Text>
-              <Text variant="titleMedium">
-                {currentFoodMacro.Fat ? currentFoodMacro.Fat : 0}g
-              </Text>
-            </View>
+          <View style={styles.dataItem}>
+            <MaterialCommunityIcons
+              name="target"
+              size={30}
+              color={isDarkMode ? '#FFFFFF' : '#121212'}
+            />
+            <Text variant="titleLarge">Carbs</Text>
+            <Text variant="titleMedium">{userGoals.dailyCarbs}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <View style={{flexDirection: 'row', marginBottom: 10}}>
-              <Text variant="titleLarge">Carbohydrate: </Text>
-              <Text variant="titleMedium">
-                {currentFoodMacro.Carbohydrate
-                  ? currentFoodMacro.Carbohydrate
-                  : 0}
-                g
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', marginBottom: 10}}>
-              <Text variant="titleLarge">Fiber: </Text>
-              <Text variant="titleMedium">
-                {currentFoodMacro.Fiber ? currentFoodMacro.Fiber : 0}g
-              </Text>
-            </View>
+          <View style={styles.dataItem}>
+            <MaterialCommunityIcons
+              name="target"
+              size={30}
+              color={isDarkMode ? '#FFFFFF' : '#121212'}
+            />
+            <Text variant="titleLarge">Fat</Text>
+            <Text variant="titleMedium">{userGoals.dailyFat}</Text>
           </View>
         </View>
-      )}
-      <Divider horizontalInset={true} bold={true} />
-      {currentExericesCalBurnt && (
-        <View style={{padding: 20}}>
-          <View>
-            <Text variant="titleLarge" style={{fontWeight: 'bold'}}>
-              Workout
-            </Text>
+      </List.Section>
+
+      <Divider />
+
+      <List.Section>
+        <List.Subheader style={styles.subheader}>Summary</List.Subheader>
+        {currentExericesCalBurnt && currentFoodMacro && (
+          <View style={styles.dataContainer}>
+            <View style={styles.dataItem}>
+              <MaterialCommunityIcons
+                name="chart-timeline-variant"
+                size={30}
+                color={isDarkMode ? '#FFFFFF' : '#121212'}
+              />
+              <Text variant="titleLarge">Total Calories</Text>
+              <Text variant="titleMedium">
+                {Math.round(
+                  currentFoodMacro.Calories ? currentFoodMacro.Calories : 0,
+                ) -
+                  (currentExericesCalBurnt.caloriesBurned
+                    ? currentExericesCalBurnt.caloriesBurned
+                    : 0)}
+              </Text>
+            </View>
           </View>
-          <View style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
-            <Text variant="titleLarge">Calories Burned: </Text>
-            <Text variant="titleMedium">
-              {currentExericesCalBurnt.caloriesBurned
-                ? currentExericesCalBurnt.caloriesBurned
-                : 0}
-            </Text>
-          </View>
-        </View>
-      )}
-      <Divider horizontalInset={true} bold={true} />
-      {currentExericesCalBurnt && currentFoodMacro && (
-        <View style={{padding: 20}}>
-          <View style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
-            <Text variant="titleLarge">Total Calories: </Text>
-            <Text variant="titleMedium">
-              {(currentFoodMacro.Calories ? currentFoodMacro.Calories : 0) -
-                (currentExericesCalBurnt.caloriesBurned
-                  ? currentExericesCalBurnt.caloriesBurned
-                  : 0)}
-            </Text>
-          </View>
-        </View>
-      )}
+        )}
+      </List.Section>
+
+      <Divider />
       {coach && coach.length !== 0 && (
-        <View>
-          <Divider horizontalInset={true} bold={true} />
-          <View style={{padding: 20}}>
-            <View
-              style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
-              <Text variant="titleLarge">Your Coach: </Text>
+        <List.Section>
+          <List.Subheader style={styles.subheader}>Coach</List.Subheader>
+          <View style={styles.dataContainer}>
+            <View style={styles.dataItem}>
+              <MaterialCommunityIcons
+                name="account-tie"
+                size={30}
+                color={isDarkMode ? '#FFFFFF' : '#121212'}
+              />
+              <Text variant="titleLarge">Your Coach</Text>
               <Text variant="titleMedium">{coach[0].name}</Text>
             </View>
           </View>
-        </View>
+        </List.Section>
       )}
+
+      <Divider />
+
       {scheduledSessions &&
         scheduledSessions.length !== 0 &&
         scheduledSessions[scheduledSessions.length - 1].date && (
-          <View>
-            <Divider horizontalInset={true} bold={true} />
-            <View style={{padding: 20}}>
-              <View
-                style={{flexDirection: 'row', marginBottom: 10, marginTop: 10}}>
-                <Text variant="titleLarge">Next appointment: </Text>
+          <List.Section>
+            <List.Subheader style={styles.subheader}>
+              Next Appointment
+            </List.Subheader>
+            <View style={styles.dataContainer}>
+              <View style={styles.dataItem}>
+                <MaterialCommunityIcons
+                  name="calendar"
+                  size={30}
+                  color={isDarkMode ? '#FFFFFF' : '#121212'}
+                />
+                <Text variant="titleLarge">Date</Text>
                 <Text variant="titleMedium">
                   {scheduledSessions[scheduledSessions.length - 1].date}
                 </Text>
               </View>
             </View>
-          </View>
+          </List.Section>
         )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -227,10 +362,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 25,
   },
-  textTitle: {
-    fontSize: 25,
+  subheader: {
+    fontSize: 24,
     fontWeight: 'bold',
     padding: 2,
+  },
+  dataContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 20,
+    flexWrap: 'wrap', // Add this line
+  },
+  dataItem: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 });
 
