@@ -143,3 +143,5 @@ export const NUTRITION_DATA = [
     ],
   },
 ];
+
+export const EXERCISE_DATA = [200, 300, 150, 270, 350, 180];
